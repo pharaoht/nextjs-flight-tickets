@@ -13,8 +13,9 @@ const Ticketing = () => {
     const { isLoading, sendRequest } = useHttp()
 
     const getFlights = async () => {
+
         const requconFig = {
-            url: 'http://localhost:3000/api/flights',
+            url: `http://${window.location.host}/api/flights`,
             method: 'GET',
             headers: {
                 accept: 'application/json'
