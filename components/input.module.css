@@ -1,0 +1,62 @@
+.inputBx {
+    margin: 0 20px;
+}
+
+.title {
+    color: #222;
+    margin-bottom: 10px;
+    cursor: default;
+}
+
+.title:hover {
+    color: #00a698;
+}
+
+.title.white {
+    color: #fff;
+}
+
+.inputBx input {
+    border: 1px solid #222;
+    outline: none;
+    padding: 5px;
+    width: 100%;
+    min-width: 100px;
+    height: 30px;
+}
+
+.inputBx input:focus {
+    border: 2px solid #00a698;
+}
+
+.inputBx input[type="Submit"] {
+    outline: none;
+    border: none;
+    background: #00a698;
+    color: #fff;
+    cursor: pointer;
+    letter-spacing: 2px;
+    padding: 10px;
+    height: 30px;
+    line-height: 10px;
+}
+
+.airports {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-bottom: 1px solid grey;
+    color: grey;
+}
+
+.airports:hover {
+    color: black;
+    background-color: #f1f2f8;
+    border-radius: 5px;
+}
+
+.cab-dd {
+    width: 100%;
+    text-align: center;
+    height: 30px;
+    border-radius: 5px;
+}

@@ -1,0 +1,29 @@
+.location_holder {
+    list-style: none;
+    padding: 0%;
+    margin: 0%;
+}
+
+.airport_holder {
+    width: 20%;
+    position: absolute;
+    padding: 5px;
+    display: block;
+    bottom: 100%;
+    background: #fff;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.airports {
+    cursor: pointer;
+    padding: 5px 10px;
+    border-bottom: 1px solid grey;
+    color: grey;
+}
+
+.airports:hover {
+    color: black;
+    background-color: #f1f2f8;
+    border-radius: 5px;
+}
