@@ -1,0 +1,39 @@
+.parentTicketContainer {
+    padding: 0 100px;
+    background-color: #f1f2f8;
+}
+
+.mainFlightInfo {
+    display: flex;
+}
+
+.sidebarComponent {
+    margin-top: 10px;
+    width: 30%;
+}
+
+.ticketArea {
+    width: 100%;
+    display: flex;
+}
+
+.sidebarTotal {
+    text-align: center;
+}
+
+@media (max-width: 767px) {
+    .parentTicketContainer {
+        padding: 0 5px;
+    }
+
+    .mainFlightInfo {
+        display: block;
+
+    }
+
+    .sidebarComponent {
+        margin-top: 10px;
+        width: 100%;
+    }
+
+}

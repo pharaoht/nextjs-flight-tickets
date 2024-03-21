@@ -1,39 +1,9 @@
-'use client'
-import { useSearchParams } from 'next/navigation';
-import React, { useState, useEffect } from 'react';
-import useHttp from '@/hooks/useHttp';
+import TicketWrapper from "./Wrapper";
 
-
-const Ticketing = () => {
-
-    const searchParams = useSearchParams();
-
-    const [flights, setFlights] = useState([]);
-
-    const { isLoading, sendRequest } = useHttp()
-
-    const getFlights = async () => {
-
-        const requconFig = {
-            url: `http://${window.location.host}/api/flights`,
-            method: 'GET',
-            headers: {
-                accept: 'application/json'
-            }
-        }
-        function getData(data: string){
-            console.log(data)
-        }
-        const data = await sendRequest({requestConfig: requconFig, callback: getData})
-    };
-
-    useEffect(()=> {
-        getFlights()
-    }, [])
-
+const TicketDisplayPage = () => {
     return (
-        <div>page</div>
+        <TicketWrapper/>
     )
-}
+};
 
-export default Ticketing
+export default TicketDisplayPage;

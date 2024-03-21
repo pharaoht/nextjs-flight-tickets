@@ -6,11 +6,7 @@ import AirportLocationsList from './AirportLocationList';
 import CustomFormInput from './Input';
 import styles from './flightform.module.css';
 import { getTodayDate, requestApiObject, getSearchParamValue, getMinDate } from '@/util';
-
-const FROMLOCATION = 'fromLocation';
-const TOLOCATION = 'toLocation';
-const DEPARTURE = 'departure';
-const RETURN = 'return';
+import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN} from '@/constants';
 
 const FlightForm = () => {
 

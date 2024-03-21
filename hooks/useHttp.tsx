@@ -30,7 +30,7 @@ const sendRequest = async ({ requestConfig, callback }: useHttpType,) => {
             );
 
             if(response.status !== 200){ throw new Error('Request failed') }
-
+    
             callback(response.data);
             setIsLoading(false);
         }
