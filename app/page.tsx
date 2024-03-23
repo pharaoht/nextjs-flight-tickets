@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import styles from "./page.module.css";
 import FlightForm from "@/components/FlightForm";
+import { Suspense } from "react";
 
 const Home = () => {
 
@@ -15,8 +16,9 @@ const Home = () => {
                   <Link className={styles.linkBtn} href='/tickets'>Explore Destinations</Link>
                 </button>
             </div>
-
-            <FlightForm/>
+            <Suspense fallback={<>Loading</>}>
+              <FlightForm/>
+            </Suspense>
 
         </div>
     </div>
