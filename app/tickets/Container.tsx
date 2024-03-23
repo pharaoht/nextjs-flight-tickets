@@ -49,7 +49,7 @@ const Container = () => {
         <ThemeProvider theme={theme}>
             <div className={styles.parentTicketContainer}>
                 <div className={styles.flighEditComponent}>
-                    <Suspense fallback='loading'>
+                    <Suspense fallback={<>Loading</>}>
                         <SearchAdvance getFlights={getFlights}/>
                     </Suspense>
                 </div>

@@ -2,7 +2,7 @@ import useURLParams from '@/hooks/useUrlParams';
 import styles from './searchAdvance.module.css';
 import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION } from '@/constants';
 import useDate from '@/hooks/useDate';
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import SearchForm from '../SearchForm/SearchForm';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
@@ -116,7 +116,7 @@ const SearchAdvance = ({ getFlights }: SearchAdvanceProps) => {
                         </div>
                     </div>
                 </div>
-                { isExpanded && <SearchForm /> }
+                { isExpanded && <Suspense fallback={<>loading</>}><SearchForm /> </Suspense>}
             </div>
         </div>
     )
