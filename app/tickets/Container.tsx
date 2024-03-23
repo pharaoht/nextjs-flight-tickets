@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect, useContext } from 'react';
+import React, { useEffect, useContext, Suspense } from 'react';
 import useHttp from '@/hooks/useHttp';
 import { requestFlightsApiObject, } from '@/util/index';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN } from '@/constants';
@@ -49,7 +49,9 @@ const Container = () => {
         <ThemeProvider theme={theme}>
             <div className={styles.parentTicketContainer}>
                 <div className={styles.flighEditComponent}>
-                    <SearchAdvance getFlights={getFlights}/>
+                    <Suspense fallback='loading'>
+                        <SearchAdvance getFlights={getFlights}/>
+                    </Suspense>
                 </div>
                 <div className={styles.mainFlightInfo}>
                     <div className={styles.sidebarComponent}>
