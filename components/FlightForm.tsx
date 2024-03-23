@@ -1,6 +1,6 @@
 'use client'
 import useHttp from '@/hooks/useHttp';
-import { useRouter, usePathname, useSearchParams, } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react';
 import AirportLocationsList from './AirportLocationList';
 import CustomFormInput from './Input';
