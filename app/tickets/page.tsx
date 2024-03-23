@@ -1,8 +1,11 @@
+import { Suspense } from "react";
 import TicketWrapper from "./Wrapper";
 
 const TicketDisplayPage = () => {
     return (
-        <TicketWrapper/>
+        <Suspense fallback={<div>Loading...</div>}>
+            <TicketWrapper/>
+        </Suspense>
     )
 };
 
