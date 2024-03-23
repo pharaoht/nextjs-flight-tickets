@@ -1,7 +1,6 @@
 import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION } from "@/constants";
-import { formatFlightData, getSearchParamValue } from "@/util";
-import { useSearchParams } from "next/navigation";
-import React, { useEffect, useState, ReactNode,  } from "react";
+import { formatFlightData, } from "@/util";
+import React, { useState, ReactNode,  } from "react";
 
 interface FlightConextType {
     flightData: any[];

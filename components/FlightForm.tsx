@@ -5,20 +5,21 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import AirportLocationsList from './AirportLocationList';
 import CustomFormInput from './Input';
 import styles from './flightform.module.css';
-import { getTodayDate, requestApiObject, getSearchParamValue, getMinDate } from '@/util';
+import { getTodayDate, requestApiObject, getMinDate } from '@/util';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN} from '@/constants';
+import useURLParams from '@/hooks/useUrlParams';
 
 const FlightForm = () => {
-
-    const searchParams = useSearchParams();
     
     const router = useRouter();
 
+    const { setUrlParams, getUrlParamsValue } = useURLParams();
+
     const [formState, setFormState] = useState<{ [key: string]: string }>({
-        [FROMLOCATION]: getSearchParamValue(searchParams, FROMLOCATION),
-        [TOLOCATION]: getSearchParamValue(searchParams, TOLOCATION),
-        [DEPARTURE]: getSearchParamValue(searchParams, DEPARTURE),
-        [RETURN]: getSearchParamValue(searchParams, RETURN),
+        [FROMLOCATION]: getUrlParamsValue(FROMLOCATION),
+        [TOLOCATION]: getUrlParamsValue(TOLOCATION),
+        [DEPARTURE]: getUrlParamsValue(DEPARTURE),
+        [RETURN]: getUrlParamsValue(RETURN),
     });
     
     const [fromAirportLocations, setFromAirportLocations] = useState([]);
@@ -29,30 +30,6 @@ const FlightForm = () => {
 
     const { isLoading: loadingToLocations, sendRequest: getToLocations } = useHttp();
 
-    const updateSearchParams = (queryName: string, queryValue: string) => {
-
-        const url = new URL(window.location.href);
-
-        let queryVal = queryValue;
-
-        let params = new URLSearchParams(url.search);
-
-        if(queryName == FROMLOCATION || queryName == TOLOCATION){
-            queryVal.substring(0,3)
-
-        }
-
-        if (params.has(queryName)) {
-        
-            params.set(queryName, queryVal);
-        } else {
-            params.append(queryName, queryVal);
-        }
-
-        const newPath = `${url.pathname}?${params.toString()}`;
-
-        router.replace(newPath);
-    };
 
     const getFromAirports = async ( inputValue: string) => {
 
@@ -99,20 +76,20 @@ const FlightForm = () => {
 
     useEffect(() => {
         if(formState.toLocation != ''){
-            updateSearchParams(TOLOCATION, formState.toLocation);
+            setUrlParams(TOLOCATION, formState.toLocation);
         }
         getToApirports(formState.toLocation);
     }, [ formState.toLocation ])
 
     useEffect(() => {
         if(formState.departure != ''){
-            updateSearchParams(DEPARTURE, formState.departure);
+            setUrlParams(DEPARTURE, formState.departure);
         }
     }, [ formState.departure])
 
     useEffect(() => {
         if(formState.return != ''){
-            updateSearchParams(RETURN, formState.return);
+            setUrlParams(RETURN, formState.return);
         }
     }, [ formState.return ])
 
@@ -120,7 +97,7 @@ const FlightForm = () => {
         getFromAirports(formState.fromLocation);
   
         if(formState.fromLocation != ''){
-            updateSearchParams(FROMLOCATION, formState.fromLocation);
+            setUrlParams(FROMLOCATION, formState.fromLocation);
         }
 
     }, [ formState.fromLocation ])

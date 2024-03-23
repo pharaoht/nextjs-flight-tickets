@@ -49,13 +49,6 @@ export const requestFlightsApiObject = ( from?:string, destination?:string, depa
     }
 }
 
-export const getSearchParamValue = (searchParamObject: ReadonlyURLSearchParams, paramName: string) => {
-
-    const value = searchParamObject.get(paramName) || '';
-
-    return String(value);
-}
-
 export const formatFlightData = ( flightData: any) => {
 
     const data = flightData.data;
@@ -77,4 +70,25 @@ export const formatFlightData = ( flightData: any) => {
 
     return formattedData
 
+}
+
+
+export const formLocationData = ( locationData: any) => {
+
+    const trimInternational = ( airporLocation: string ) => {
+    
+        return airporLocation.replace(/International/g, 'Int');
+    }
+    
+    const data = locationData.locations;
+
+    const formattedData = data.map((itm:any) => {
+        const country = itm.city.country.name;
+        return {
+            id: itm.id,
+            name: `${trimInternational(itm.name)} (${itm.id}) - ${country}`
+        }
+    })
+
+    return formattedData
 }

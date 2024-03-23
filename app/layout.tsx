@@ -14,10 +14,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={styles.body}>
-        <Navbar/>
-        {children}
-      </body>
+        <body className={styles.body}>
+          <Navbar/>
+          {children}
+        </body>
     </html>
   );
 }

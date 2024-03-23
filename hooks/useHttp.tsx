@@ -12,10 +12,11 @@ interface useHttpType {
 }
 
 const useHttp = () => {
+
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     
-const sendRequest = async ({ requestConfig, callback }: useHttpType,) => {
+    const sendRequest = async ({ requestConfig, callback }: useHttpType,) => {
         setIsLoading(true);
         setError('');
 
