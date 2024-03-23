@@ -1,6 +1,5 @@
 'use client'
-import { useSearchParams } from 'next/navigation';
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useEffect, useContext } from 'react';
 import useHttp from '@/hooks/useHttp';
 import { requestFlightsApiObject, } from '@/util/index';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN } from '@/constants';
