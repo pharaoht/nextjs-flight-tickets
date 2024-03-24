@@ -5,7 +5,7 @@ import { requestFlightsApiObject, } from '@/util/index';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN } from '@/constants';
 import FlightContext from '@/context/flightState';
 import styles from './container.module.css';
-import SearchAdvance from '@/components/AdvanceSearch/SearchAdvance';
+import Searchbar from '@/components/Searchbar/Searchbar';
 import useURLParams from '@/hooks/useUrlParams';
 import { ThemeProvider } from '@emotion/react';
 import { theme } from '@/theme/theme';
@@ -50,7 +50,7 @@ const Container = () => {
             <div className={styles.parentTicketContainer}>
                 <div className={styles.flighEditComponent}>
                     <Suspense fallback={<>Loading</>}>
-                        <SearchAdvance getFlights={getFlights}/>
+                        <Searchbar getFlights={getFlights}/>
                     </Suspense>
                 </div>
                 <div className={styles.mainFlightInfo}>

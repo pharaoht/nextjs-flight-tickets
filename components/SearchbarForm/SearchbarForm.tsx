@@ -1,24 +1,26 @@
 import useHttp from '@/hooks/useHttp';
-import Button from '@mui/material/Button';
 import styles from './searchform.module.css';
 import useURLParams from '@/hooks/useUrlParams';
-import ButtonGroup from '@mui/material/ButtonGroup';
 import { useEffect, useState } from 'react';
 import { formLocationData, requestApiObject } from '@/util';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { Autocomplete, Box, TextField } from '@mui/material';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { DEPARTURE, DIRECTION, FROMLOCATION, RETURN, TOLOCATION } from '@/constants';
+import { ADULTS, CABIN, CHILDREN, CURRENCY, DEPARTURE, DIRECTION, FROMLOCATION, INFANTS, RETURN, TOLOCATION, } from '@/constants';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
+import CabinSelection from '../Cabin/Cabin';
+import CurrencySelection from '../Currency/Currency';
+import PassengerField from '../Passengers/Passengers';
+import DestinationButtonGroup from '../DestinationBtn/DestinationBtn';
 
 const ONEWAY = 'oneWay';
-const RETURNFLIGHT = 'return';
 
 interface Airport {
     name: string;
     id: string;
 }
+
 const SearchForm = () => {
 
     const [ airportLocations, setAirportLocations] = useState<Airport[]>([]);
@@ -27,7 +29,12 @@ const SearchForm = () => {
         [FROMLOCATION]: '',
         [TOLOCATION]: '',
         [DEPARTURE]:'',
-        [RETURN]:''
+        [RETURN]:'',
+        [CABIN]:' ',
+        [ADULTS]:'1',
+        [CHILDREN]:'0',
+        [INFANTS]:'0',
+        [CURRENCY]:'USD',
     });
 
     const { setUrlParams, getUrlParamsValue } = useURLParams();
@@ -61,7 +68,6 @@ const SearchForm = () => {
         }));
     };
 
-
     useEffect(() => {
 
         const timer = setTimeout(()=>{
@@ -80,8 +86,6 @@ const SearchForm = () => {
         return () => clearTimeout(timer)
     }, [formState[TOLOCATION]]);
 
-
-
     return (
         <form className={styles.container}>
             <Box
@@ -89,21 +93,16 @@ const SearchForm = () => {
                 sx={{'& .MuiTextField-root': {width: '20vw' },}}
             >
                 <div>
-                    <ButtonGroup variant="contained">
-                        <Button
-                            color={selectedOption === ONEWAY ? 'primary' : 'secondary'}
-                            onClick={() => handleParamChange(DIRECTION, 'oneWay')}
-                        >
-                            One-way
-                        </Button>
-                        <Button
-                            color={selectedOption === RETURNFLIGHT ? 'primary' : 'secondary'}
-                            onClick={() => handleParamChange(DIRECTION, 'return')}
-                        >
-                            Return
-                            </Button>
-                    </ButtonGroup>
+                   <DestinationButtonGroup
+                    selectedOption={selectedOption}
+                    handleParamChange={handleParamChange}
+                   />
                 </div>
+            </Box>
+            <Box
+                component="form"
+                sx={{'& .MuiTextField-root': {width: '20vw' },}}
+            >
                 <div className={styles.inputContainer}>
                     <Autocomplete
                         filterOptions={(x) => x}
@@ -115,7 +114,7 @@ const SearchForm = () => {
                         options={airportLocations}
                         renderInput={(params) => (
                             <TextField 
-                                className={styles.textField}
+                                className={styles.whiteBackGround}
                                 variant="filled"
                                 {...params} 
                                 label="From"
@@ -127,12 +126,12 @@ const SearchForm = () => {
                         inputValue={formState[TOLOCATION]}
                         onInputChange={(event, newInputValue) => handleFormStateChange(TOLOCATION, newInputValue)}
                         loading={isLoading}
-                        id="fromLocation"
+                        id="toLocation"
                         getOptionLabel={(option) => option.name} 
                         options={airportLocations}
                         renderInput={(params) => (
                             <TextField 
-                                className={styles.textField}
+                                className={styles.whiteBackGround}
                                 variant="filled"
                                 {...params} 
                                 label="Destination"
@@ -142,23 +141,64 @@ const SearchForm = () => {
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DatePicker 
                             label="Departure" 
-                            className={styles.textField}
+                            className={styles.whiteBackGround}
                             minDate={moment()}
                             format="YYYY-MM-DD"
 
                         />
                         <DatePicker 
                             label="Return" 
-                            className={styles.textField}
+                            className={styles.whiteBackGround}
                             disabled={selectedOption === ONEWAY}
                             format="YYYY-MM-DD"
 
                         />
-                        
                     </LocalizationProvider>
                 </div>
             </Box>
-        </form>
+            <Box
+                component="form"
+                sx={{'& .MuiTextField-root': { },}}
+            >
+                <div className={styles.filterContainer}>
+                    <CabinSelection 
+                        handleChange={handleFormStateChange}
+                        inputValue={formState[CABIN]}
+                    />
+                    <PassengerField
+                        label='Adults'
+                        id='adultField'
+                        className={`${styles.whiteBackGround} ${styles.small}`}
+                        value={formState[ADULTS]}
+                        inputProps={{ min: 0, max: 9 }}
+                        paramName={ADULTS}
+                        handleChange={handleFormStateChange}
+                    />
+                    <PassengerField
+                        label='Children'
+                        id='childrenField'
+                        className={`${styles.whiteBackGround} ${styles.small}`}
+                        value={formState[CHILDREN]}
+                        inputProps={{ min: 0, max: 9 }}
+                        paramName={CHILDREN}
+                        handleChange={handleFormStateChange}
+                    />
+                    <PassengerField
+                        label='Infants'
+                        id='infantsField'
+                        value={formState[INFANTS]}
+                        className={`${styles.whiteBackGround} ${styles.small}`}
+                        inputProps={{ min: 0, max: 9, }}
+                        paramName={INFANTS}
+                        handleChange={handleFormStateChange}
+                    />
+                    <CurrencySelection
+                        handleChange={handleFormStateChange}
+                        inputValue={formState[CURRENCY]}
+                    />
+                </div>
+            </Box>
+    </form>
 )
 };
 

@@ -8,6 +8,16 @@
     margin-top: 10px;
 }
 
-.textField{
+.filterContainer{
+    display: flex;
+    margin-top: 10px;
+    gap:10px
+}
+
+.whiteBackGround{
     background-color: #fff;
+}
+
+.small{
+    width: 100px;
 }

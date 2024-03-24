@@ -2,8 +2,8 @@
 import useHttp from '@/hooks/useHttp';
 import { useRouter } from 'next/navigation';
 import React, { FormEvent, useEffect, useState } from 'react';
-import AirportLocationsList from './AirportLocationList';
-import CustomFormInput from './Input';
+import AirportLocationsList from '../AirportLocationList';
+import CustomFormInput from '../Input';
 import styles from './flightform.module.css';
 import { getTodayDate, requestApiObject, getMinDate } from '@/util';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN} from '@/constants';

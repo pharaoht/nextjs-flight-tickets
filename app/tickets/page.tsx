@@ -1,4 +1,4 @@
-import TicketWrapper from "./Wrapper";
+import TicketWrapper from "./Wrapper/Wrapper";
 
 const TicketDisplayPage = () => {
     return (

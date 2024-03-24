@@ -3,7 +3,7 @@ import styles from './searchAdvance.module.css';
 import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION } from '@/constants';
 import useDate from '@/hooks/useDate';
 import { Suspense, useEffect, useState } from 'react';
-import SearchForm from '../SearchForm/SearchForm';
+import SearchForm from '../SearchbarForm/SearchbarForm';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { Button, Box } from '@mui/material';
@@ -14,7 +14,7 @@ interface SearchAdvanceProps {
 }
 
 
-const SearchAdvance = ({ getFlights }: SearchAdvanceProps) => {
+const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
 
     const [isExpanded, setIsExpanded] = useState(false);
 
@@ -122,4 +122,4 @@ const SearchAdvance = ({ getFlights }: SearchAdvanceProps) => {
     )
 };
 
-export default SearchAdvance;
+export default Searchbar;
