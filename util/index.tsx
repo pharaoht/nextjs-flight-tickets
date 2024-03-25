@@ -1,5 +1,4 @@
 import moment from 'moment';
-import { ReadonlyURLSearchParams } from 'next/navigation';
 
 export const getTodayDate = () => moment().format('YYYY-MM-DD');
 
@@ -35,12 +34,12 @@ export const requestApiObject = ( searchvalue: string ) => {
     }
 }
 
-export const requestFlightsApiObject = ( from?:string, destination?:string, departureDate?: string, returnDate?: string) => {
+export const requestFlightsApiObject = ( url: string) => {
 
     const APIKEY = process.env.NEXT_PUBLIC_API_KEY;
 
     return {
-        url: `https://tequila-api.kiwi.com/v2/search?fly_from=${from?.substring(0,3)}&fly_to=${destination?.substring(0,3)}&dateFrom=${departureDate}&dateTo=${departureDate}&return_to=${returnDate}&return_from=${returnDate}&vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&curr=USD&locale=en&limit=50`,
+        url: `https://tequila-api.kiwi.com/v2/search?${url}`,
         method: 'GET',
         headers: {
             accept: 'application/json',
@@ -86,9 +85,48 @@ export const formLocationData = ( locationData: any) => {
         const country = itm.city.country.name;
         return {
             id: itm.id,
-            name: `${trimInternational(itm.name)} (${itm.id}) - ${country}`
+            name: `${itm.id} - ${trimInternational(itm.name)} - ${country}`
         }
     })
 
     return formattedData
+}
+
+
+export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) => {
+
+    const queryParams: Record<string, string | string[]> = {
+        fromLocation:'fly_from',
+        toLocation:'fly_to',
+        departure:['dateFrom', 'dateTo'],
+        return: ['return_to', 'return_from'],
+        adults: 'adults',
+        children: 'children',
+        infants: 'infants',
+        cabin: 'selected_cabins',
+        currency: 'curr',
+    }
+
+    const endString = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&locale=en&limit=50';
+    let qStr = '';
+    params.map((itm, idx) => {
+
+        if(queryParams.hasOwnProperty(itm.key)){
+            const keyName = itm.key;
+            if(typeof queryParams[keyName] === 'string'){
+                if(keyName === 'fromLocation' || 'toLocation'){
+                    
+                     return qStr += `${queryParams[keyName]}=${itm.value.substring(0,3)}&`
+                }
+                qStr += `${queryParams[keyName]}=${itm.value}&`
+            }
+            else{
+                
+                qStr += `${queryParams[keyName][0]}=${itm.value}&${queryParams[keyName][1]}=${itm.value}&`
+            }
+            
+        }
+    });
+
+    return qStr + endString;
 }

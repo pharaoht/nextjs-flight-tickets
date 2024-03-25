@@ -27,6 +27,23 @@ const useURLParams = () => {
     
     };
 
+    const setMultipleUrlParams = (queryParams: { [key: string]: string }) => {
+        const url = new URL(window.location.href);
+        const params = new URLSearchParams(url.search);
+
+        for (const [key, value] of Object.entries(queryParams)) {
+            if (params.has(key)) {
+                params.set(key, value);
+            } else {
+                params.append(key, value);
+            }
+        }
+
+        const newPath = `${url.pathname}?${params.toString()}`;
+
+        router.replace(newPath);
+    };
+
     const getUrlParamsValue = ( paramName: string) => {
 
         const value = searchParams.get(paramName) || '';
@@ -34,11 +51,26 @@ const useURLParams = () => {
         return value;
     };
 
+    const getAllUrlParams = (): { key: string, value: string }[] => {
+
+        const searchParams = new URLSearchParams(window.location.search);
+
+        const params = [];
+
+        for(const [key, value] of searchParams){
+
+            params.push({key, value})
+        }
+
+        return params;
+    };
+
 
     return {
         setUrlParams,
+        setMultipleUrlParams,
         getUrlParamsValue,
-
+        getAllUrlParams,
     }
 };
 

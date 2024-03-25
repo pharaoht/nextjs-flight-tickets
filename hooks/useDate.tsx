@@ -42,6 +42,10 @@ const useDate = () => {
         return moment(returDate).isBefore(departure);
     }
 
+    const getTodayDate = () => {
+        
+    }
+
     return {
         getFollowingDate,
         getPreviousDate,

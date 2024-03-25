@@ -14,6 +14,10 @@
     gap:10px
 }
 
+.filterContainer>*:last-child {
+    margin-left: auto;
+}
+
 .whiteBackGround{
     background-color: #fff;
 }

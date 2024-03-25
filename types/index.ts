@@ -7,3 +7,8 @@ export type CurrenciesType = {
     value: string;
     label: string;
 }
+
+export type AirportLocationType = {
+    name: string;
+    id: string;
+}

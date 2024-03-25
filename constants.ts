@@ -14,8 +14,11 @@ export const PRICETO = 'priceTo';
 export const DIRECTION = 'direction';
 export const CURRENCY = 'currency'
 
+
+//simpleVariables
+export const ONEWAY = 'oneWay';
+
 export const CABINSELECTIONS: CabinSelectionType[] = [
-    { name: 'Any', value: ' '},
     { name: 'Economy', value: 'M'},
     { name: 'Premium Economy', value: 'W'},
     { name: 'Business Class', value: 'C'},

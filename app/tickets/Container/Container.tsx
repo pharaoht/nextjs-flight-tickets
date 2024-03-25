@@ -1,8 +1,7 @@
 'use client'
 import React, { useEffect, useContext, Suspense } from 'react';
 import useHttp from '@/hooks/useHttp';
-import { requestFlightsApiObject, } from '@/util/index';
-import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN } from '@/constants';
+import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
 import FlightContext from '@/context/flightState';
 import styles from './container.module.css';
 import Searchbar from '@/components/Searchbar/Searchbar';
@@ -14,7 +13,7 @@ const Container = () => {
 
     const { isLoading, sendRequest } = useHttp();
 
-    const { getUrlParamsValue } = useURLParams()
+    const { getAllUrlParams } = useURLParams()
 
     const flightContext = useContext(FlightContext);
 
@@ -22,12 +21,11 @@ const Container = () => {
 
     const getFlights = async () => {
 
-        const fromLocation = getUrlParamsValue( FROMLOCATION)
-        const toLocation = getUrlParamsValue(TOLOCATION)
-        const departureDate = getUrlParamsValue(DEPARTURE)
-        const returnDate = getUrlParamsValue(RETURN)
+        const params = getAllUrlParams();
 
-        const requconFig = requestFlightsApiObject(fromLocation, toLocation, departureDate, returnDate );
+        const paramEndpoint = getFlightParamBuilder(params);
+
+        const requconFig = requestFlightsApiObject(paramEndpoint);
     
         await sendRequest({requestConfig: requconFig, callback: flightContext?.setData || (()=>{})})
     };
@@ -37,11 +35,12 @@ const Container = () => {
             <span>Getting data</span>
         :
             <span>
-                <b>{contextFlightsLength.length}</b> Total flights avaliable
+                <b>{contextFlightsLength.length}</b> Total flights available
             </span>
     );
 
     useEffect(()=>{
+        console.log('HIIIIIIIIIIII')
       getFlights()
     },[]);
 

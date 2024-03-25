@@ -1,43 +1,41 @@
-import useHttp from '@/hooks/useHttp';
-import styles from './searchform.module.css';
-import useURLParams from '@/hooks/useUrlParams';
-import { useEffect, useState } from 'react';
-import { formLocationData, requestApiObject } from '@/util';
-import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { Autocomplete, Box, TextField } from '@mui/material';
-import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
-import { ADULTS, CABIN, CHILDREN, CURRENCY, DEPARTURE, DIRECTION, FROMLOCATION, INFANTS, RETURN, TOLOCATION, } from '@/constants';
-import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import moment from 'moment';
+import { Box, Button, } from '@mui/material';
+import useHttp from '@/hooks/useHttp';
 import CabinSelection from '../Cabin/Cabin';
+import { MouseEvent , useEffect, useState } from 'react';
+import styles from './searchform.module.css';
+import { AirportLocationType } from '@/types';
+import useURLParams from '@/hooks/useUrlParams';
 import CurrencySelection from '../Currency/Currency';
 import PassengerField from '../Passengers/Passengers';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { formLocationData, requestApiObject } from '@/util';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
 import DestinationButtonGroup from '../DestinationBtn/DestinationBtn';
+import AirportLocationField from '../AirportLocation/AirportLocation';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { ADULTS, CABIN, CHILDREN, CURRENCY, DEPARTURE, DIRECTION, FROMLOCATION, INFANTS, RETURN, TOLOCATION, ONEWAY } from '@/constants';
 
-const ONEWAY = 'oneWay';
+import SearchIcon from '@mui/icons-material/Search';
 
-interface Airport {
-    name: string;
-    id: string;
-}
 
 const SearchForm = () => {
+    const { setUrlParams, setMultipleUrlParams, getUrlParamsValue } = useURLParams();
 
-    const [ airportLocations, setAirportLocations] = useState<Airport[]>([]);
+    const [ airportLocations, setAirportLocations] = useState<AirportLocationType[]>([]);
 
     const [ formState, setFormState ] = useState({
         [FROMLOCATION]: '',
         [TOLOCATION]: '',
-        [DEPARTURE]:'',
-        [RETURN]:'',
-        [CABIN]:' ',
+        [DEPARTURE]: getUrlParamsValue(DEPARTURE) || '',
+        [RETURN]:getUrlParamsValue(RETURN) || '',
+        [CABIN]:'M',
         [ADULTS]:'1',
         [CHILDREN]:'0',
         [INFANTS]:'0',
         [CURRENCY]:'USD',
     });
 
-    const { setUrlParams, getUrlParamsValue } = useURLParams();
 
     const { isLoading, sendRequest } = useHttp();
 
@@ -62,11 +60,17 @@ const SearchForm = () => {
     };
 
     const handleFormStateChange = (key: string, value: string) => {
+        console.log(value)
         setFormState(prev => ({
             ...prev,
             [key]: value
         }));
     };
+
+    const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        setMultipleUrlParams(formState);
+    }
 
     useEffect(() => {
 
@@ -87,56 +91,42 @@ const SearchForm = () => {
     }, [formState[TOLOCATION]]);
 
     return (
-        <form className={styles.container}>
+        <div className={styles.container}>
             <Box
                 component="form"
                 sx={{'& .MuiTextField-root': {width: '20vw' },}}
             >
                 <div>
                    <DestinationButtonGroup
-                    selectedOption={selectedOption}
-                    handleParamChange={handleParamChange}
+                        selectedOption={selectedOption}
+                        handleParamChange={handleParamChange}
                    />
                 </div>
             </Box>
             <Box
                 component="form"
-                sx={{'& .MuiTextField-root': {width: '20vw' },}}
+                sx={{'& .MuiTextField-root': {width:'20vw'}}}
             >
                 <div className={styles.inputContainer}>
-                    <Autocomplete
-                        filterOptions={(x) => x}
+                    <AirportLocationField
                         inputValue={formState[FROMLOCATION]}
-                        onInputChange={(event, newInputValue) => handleFormStateChange(FROMLOCATION, newInputValue)}
+                        onInputChange={handleFormStateChange}
                         loading={isLoading}
-                        id="fromLocation"
-                        getOptionLabel={(option) => option.name} 
+                        id={'fromLocation'}
                         options={airportLocations}
-                        renderInput={(params) => (
-                            <TextField 
-                                className={styles.whiteBackGround}
-                                variant="filled"
-                                {...params} 
-                                label="From"
-                            />
-                        )}
+                        label='From'
+                        className={styles.whiteBackGround}
+                        paramType={FROMLOCATION}
                     />
-                    <Autocomplete
-                        filterOptions={(x) => x}
+                    <AirportLocationField
                         inputValue={formState[TOLOCATION]}
-                        onInputChange={(event, newInputValue) => handleFormStateChange(TOLOCATION, newInputValue)}
+                        onInputChange={handleFormStateChange}
                         loading={isLoading}
-                        id="toLocation"
-                        getOptionLabel={(option) => option.name} 
+                        id={'toLocation'}
                         options={airportLocations}
-                        renderInput={(params) => (
-                            <TextField 
-                                className={styles.whiteBackGround}
-                                variant="filled"
-                                {...params} 
-                                label="Destination"
-                            />
-                        )}
+                        label='Destination'
+                        className={styles.whiteBackGround}
+                        paramType={TOLOCATION}
                     />
                     <LocalizationProvider dateAdapter={AdapterMoment}>
                         <DatePicker 
@@ -144,6 +134,8 @@ const SearchForm = () => {
                             className={styles.whiteBackGround}
                             minDate={moment()}
                             format="YYYY-MM-DD"
+                            value={moment(formState[DEPARTURE])}
+                            onChange={(newValue) => handleFormStateChange(DEPARTURE, String(moment(newValue).format('YYYY-MM-DD')))}
 
                         />
                         <DatePicker 
@@ -151,6 +143,8 @@ const SearchForm = () => {
                             className={styles.whiteBackGround}
                             disabled={selectedOption === ONEWAY}
                             format="YYYY-MM-DD"
+                            value={moment(formState[RETURN])}
+                            onChange={(newValue) => handleFormStateChange(RETURN, String(moment(newValue).format('YYYY-MM-DD')))}
 
                         />
                     </LocalizationProvider>
@@ -196,9 +190,12 @@ const SearchForm = () => {
                         handleChange={handleFormStateChange}
                         inputValue={formState[CURRENCY]}
                     />
+                    <Button variant="contained" endIcon={<SearchIcon />} onClick={handleSubmit}>
+                        Find
+                    </Button>
                 </div>
             </Box>
-    </form>
+    </div>
 )
 };
 
