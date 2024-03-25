@@ -110,9 +110,14 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
                             <span className={styles.sdChev} onClick={() => incrementDate(DEPARTURE)}>{'>'}</span>
                         </div>
                         <div className={styles.sddate}>
-                            <span className={styles.sdChev} onClick={() => decrementDate(RETURN)}>{'<'}</span>
-                            <span>{returnDate}</span>
-                            <span className={styles.sdChev} onClick={() => incrementDate(RETURN)}>{'>'}</span>
+                            { returnDate && (
+                                    <>
+                                        <span className={styles.sdChev} onClick={() => decrementDate(RETURN)}>{'<'}</span>
+                                        <span>{returnDate}</span>
+                                        <span className={styles.sdChev} onClick={() => incrementDate(RETURN)}>{'>'}</span>
+                                    </>
+                                )
+                            }
                         </div>
                     </div>
                 </div>

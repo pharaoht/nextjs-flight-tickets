@@ -1,13 +1,16 @@
 'use client'
-import React, { useEffect, useContext, Suspense } from 'react';
 import useHttp from '@/hooks/useHttp';
-import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
-import FlightContext from '@/context/flightState';
-import styles from './container.module.css';
-import Searchbar from '@/components/Searchbar/Searchbar';
-import useURLParams from '@/hooks/useUrlParams';
-import { ThemeProvider } from '@emotion/react';
 import { theme } from '@/theme/theme';
+import Main from '@/components/Main/Main';
+import styles from './container.module.css';
+import { ThemeProvider } from '@emotion/react';
+import useURLParams from '@/hooks/useUrlParams';
+import FlightContext from '@/context/flightState';
+import Searchbar from '@/components/Searchbar/Searchbar';
+import IconButton from '@mui/material/IconButton/IconButton';
+import React, { useEffect, useContext, Suspense } from 'react';
+import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
+import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
 
 const Container = () => {
 
@@ -32,7 +35,10 @@ const Container = () => {
 
     const renderFlightsAvailable = () => (
         isLoading ? 
-            <span>Getting data</span>
+            <span className={styles.loaderContainer}>
+                <CircularProgress size={15} /> 
+                <span className={styles.titleLoad}>Gathering Data</span>
+            </span>
         :
             <span>
                 <b>{contextFlightsLength.length}</b> Total flights available
@@ -40,7 +46,6 @@ const Container = () => {
     );
 
     useEffect(()=>{
-        console.log('HIIIIIIIIIIII')
       getFlights()
     },[]);
 
@@ -60,7 +65,7 @@ const Container = () => {
                         side bar
                     </div>
                     <div className={styles.ticketArea}>
-                        main
+                        <Main isLoading={isLoading}/>
                     </div>
                 </div>
             </div>

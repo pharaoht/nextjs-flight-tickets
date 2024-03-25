@@ -28,7 +28,9 @@ const useURLParams = () => {
     };
 
     const setMultipleUrlParams = (queryParams: { [key: string]: string }) => {
+    
         const url = new URL(window.location.href);
+
         const params = new URLSearchParams(url.search);
 
         for (const [key, value] of Object.entries(queryParams)) {

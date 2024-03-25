@@ -3,13 +3,19 @@ import moment from 'moment';
 const DASH_YYYYMMDD = 'YYYY-MM-DD';
 
 const useDate = () => {
+    
+    const getTodayDate = () => moment().format('YYYY-MM-DD');
 
     const getFollowingDate = ( dateProvided: string ): string => {
 
+        if(dateProvided === ''){
+            return ''
+        }
+        
         const currentDate = moment(dateProvided);
-
+        
         const followingDate = currentDate.add(1, 'days');
-
+        
         return followingDate.format(DASH_YYYYMMDD);
     }
 
@@ -42,13 +48,10 @@ const useDate = () => {
         return moment(returDate).isBefore(departure);
     }
 
-    const getTodayDate = () => {
-        
-    }
-
     return {
         getFollowingDate,
         getPreviousDate,
+        getTodayDate,
         isDateInPast,
         isDateGreater,
         isDateLesser

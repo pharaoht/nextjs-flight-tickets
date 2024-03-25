@@ -1,4 +1,3 @@
-import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION } from "@/constants";
 import { formatFlightData, } from "@/util";
 import React, { useState, ReactNode,  } from "react";
 

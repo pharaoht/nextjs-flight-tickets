@@ -5,9 +5,10 @@ import React, { FormEvent, useEffect, useState } from 'react';
 import AirportLocationsList from '../AirportLocationList';
 import CustomFormInput from '../Input';
 import styles from './flightform.module.css';
-import { getTodayDate, requestApiObject, getMinDate } from '@/util';
+import { requestApiObject} from '@/util';
 import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN} from '@/constants';
 import useURLParams from '@/hooks/useUrlParams';
+import useDate from '@/hooks/useDate';
 
 const FlightForm = () => {
     
@@ -29,6 +30,8 @@ const FlightForm = () => {
     const { isLoading: loadingFromLocations, sendRequest: getFromLocations } = useHttp();
 
     const { isLoading: loadingToLocations, sendRequest: getToLocations } = useHttp();
+
+    const { getTodayDate, getFollowingDate} = useDate()
 
 
     const getFromAirports = async ( inputValue: string) => {
@@ -158,7 +161,7 @@ const FlightForm = () => {
                     type='date' 
                     name={RETURN}
                     placeHolder='When would you like to return?'
-                    minDate={getMinDate(formState.departure)}
+                    minDate={getFollowingDate(formState.departure)}
                     setFormValue={setFormState}
                     isDisabled={!formState.departure && true }
                     formValue={formState.return}

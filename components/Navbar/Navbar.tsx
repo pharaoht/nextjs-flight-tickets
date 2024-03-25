@@ -3,6 +3,7 @@ import React from 'react';
 import Link from 'next/link';
 import styles from './navbar.module.css'
 import { usePathname } from 'next/navigation';
+import { DESTINATIONS, NEWSLETTER, TIPS } from '@/constants';
 
 const Navbar = () => {
 
@@ -12,9 +13,9 @@ const Navbar = () => {
 
     const links = [
         { link: '/', title: 'Home' },
-        { link: '/destination', title: 'Destinations' },
-        { link: '/tips', title: 'Tips' },
-        { link: '/newsletter', title: 'Newsletter' },
+        { link: `/${DESTINATIONS}`, title: 'Destinations' },
+        { link: `/${TIPS}`, title: 'Tips' },
+        { link: `/${NEWSLETTER}`, title: 'Newsletter' },
     ];
 
     const renderLinks = () => (

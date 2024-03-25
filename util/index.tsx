@@ -1,19 +1,5 @@
 import moment from 'moment';
 
-export const getTodayDate = () => moment().format('YYYY-MM-DD');
-
-export const getMinDate = (date: string) => {
-
-    if(date === ''){
-        return ''
-    }
-
-  const parsedDate = moment(date);
-
-  const minDate = parsedDate.add(1, 'day');
-
-  return minDate.format('YYYY-MM-DD');
-}
 
 export const formatDateStringStamp = (inputDateString: string) => {
 
@@ -85,7 +71,7 @@ export const formLocationData = ( locationData: any) => {
         const country = itm.city.country.name;
         return {
             id: itm.id,
-            name: `${itm.id} - ${trimInternational(itm.name)} - ${country}`
+            name: `${itm.id} - ${country}`
         }
     })
 
@@ -107,7 +93,12 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
         currency: 'curr',
     }
 
-    const endString = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00&locale=en&limit=50';
+    let isOneWay = false;
+
+    const baseStr = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&locale=en';
+    const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
+    const lstStr = '&limit=50';
+
     let qStr = '';
     params.map((itm, idx) => {
 
@@ -121,12 +112,15 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
                 qStr += `${queryParams[keyName]}=${itm.value}&`
             }
             else{
-                
+                if(!itm.value){
+                    isOneWay = true;
+                    return;
+                }
                 qStr += `${queryParams[keyName][0]}=${itm.value}&${queryParams[keyName][1]}=${itm.value}&`
             }
             
         }
     });
 
-    return qStr + endString;
+    return qStr + baseStr + `${isOneWay ? lstStr : retStr + lstStr}`
 }

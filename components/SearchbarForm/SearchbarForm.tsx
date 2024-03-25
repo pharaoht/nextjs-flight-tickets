@@ -1,13 +1,15 @@
 import moment from 'moment';
-import { Box, Button, } from '@mui/material';
 import useHttp from '@/hooks/useHttp';
+import useDate from '@/hooks/useDate';
 import CabinSelection from '../Cabin/Cabin';
-import { MouseEvent , useEffect, useState } from 'react';
+import { Box, Button, } from '@mui/material';
 import styles from './searchform.module.css';
 import { AirportLocationType } from '@/types';
 import useURLParams from '@/hooks/useUrlParams';
+import SearchIcon from '@mui/icons-material/Search';
 import CurrencySelection from '../Currency/Currency';
 import PassengerField from '../Passengers/Passengers';
+import { MouseEvent , useEffect, useState } from 'react';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 import { formLocationData, requestApiObject } from '@/util';
 import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment';
@@ -16,10 +18,9 @@ import AirportLocationField from '../AirportLocation/AirportLocation';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ADULTS, CABIN, CHILDREN, CURRENCY, DEPARTURE, DIRECTION, FROMLOCATION, INFANTS, RETURN, TOLOCATION, ONEWAY } from '@/constants';
 
-import SearchIcon from '@mui/icons-material/Search';
-
 
 const SearchForm = () => {
+
     const { setUrlParams, setMultipleUrlParams, getUrlParamsValue } = useURLParams();
 
     const [ airportLocations, setAirportLocations] = useState<AirportLocationType[]>([]);
@@ -27,8 +28,8 @@ const SearchForm = () => {
     const [ formState, setFormState ] = useState({
         [FROMLOCATION]: '',
         [TOLOCATION]: '',
-        [DEPARTURE]: getUrlParamsValue(DEPARTURE) || '',
-        [RETURN]:getUrlParamsValue(RETURN) || '',
+        [DEPARTURE]: '',
+        [RETURN]: '',
         [CABIN]:'M',
         [ADULTS]:'1',
         [CHILDREN]:'0',
@@ -36,8 +37,9 @@ const SearchForm = () => {
         [CURRENCY]:'USD',
     });
 
-
     const { isLoading, sendRequest } = useHttp();
+
+    const { getFollowingDate } = useDate()
 
     const selectedOption = getUrlParamsValue(DIRECTION);
 
@@ -60,7 +62,6 @@ const SearchForm = () => {
     };
 
     const handleFormStateChange = (key: string, value: string) => {
-        console.log(value)
         setFormState(prev => ({
             ...prev,
             [key]: value
@@ -89,6 +90,12 @@ const SearchForm = () => {
 
         return () => clearTimeout(timer)
     }, [formState[TOLOCATION]]);
+
+    useEffect(() => {
+        if(selectedOption === ONEWAY){
+            handleFormStateChange(RETURN, '')
+        }
+    }, [selectedOption])
 
     return (
         <div className={styles.container}>
@@ -134,16 +141,17 @@ const SearchForm = () => {
                             className={styles.whiteBackGround}
                             minDate={moment()}
                             format="YYYY-MM-DD"
-                            value={moment(formState[DEPARTURE])}
+                            value={formState[DEPARTURE] ? moment(formState[DEPARTURE]) : null}
                             onChange={(newValue) => handleFormStateChange(DEPARTURE, String(moment(newValue).format('YYYY-MM-DD')))}
 
                         />
                         <DatePicker 
                             label="Return" 
+                            minDate={moment(getFollowingDate(formState[DEPARTURE]))}
                             className={styles.whiteBackGround}
                             disabled={selectedOption === ONEWAY}
                             format="YYYY-MM-DD"
-                            value={moment(formState[RETURN])}
+                            value={formState[RETURN] ? moment(formState[RETURN]) : null}
                             onChange={(newValue) => handleFormStateChange(RETURN, String(moment(newValue).format('YYYY-MM-DD')))}
 
                         />

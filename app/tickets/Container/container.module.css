@@ -21,6 +21,15 @@
     text-align: center;
 }
 
+.loaderContainer{
+    display: 'flex';
+    align-items: 'center';
+}
+
+.titleLoad{
+    margin-left: 5px;
+}
+
 @media (max-width: 767px) {
     .parentTicketContainer {
         padding: 0 5px;
