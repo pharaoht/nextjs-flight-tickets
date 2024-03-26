@@ -19,7 +19,11 @@ import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { ADULTS, CABIN, CHILDREN, CURRENCY, DEPARTURE, DIRECTION, FROMLOCATION, INFANTS, RETURN, TOLOCATION, ONEWAY } from '@/constants';
 
 
-const SearchForm = () => {
+interface searchFormProps {
+    setExpanded: (...args:any) => void;
+}
+
+const SearchForm = ({ setExpanded }:searchFormProps) => {
 
     const { setUrlParams, setMultipleUrlParams, getUrlParamsValue } = useURLParams();
 
@@ -71,6 +75,7 @@ const SearchForm = () => {
     const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         setMultipleUrlParams(formState);
+        setExpanded(false);
     }
 
     useEffect(() => {

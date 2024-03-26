@@ -121,7 +121,7 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
                         </div>
                     </div>
                 </div>
-                { isExpanded && <Suspense fallback={<>loading</>}><SearchForm /> </Suspense>}
+                { isExpanded && <Suspense fallback={<>loading</>}><SearchForm setExpanded={setIsExpanded}/> </Suspense>}
             </div>
         </div>
     )

@@ -1,5 +1,12 @@
 .container{
     color: #fff;
+    position: absolute;
+    background-color: #042759;
+    left: 0;
+    width: calc(100% - 220px);
+    margin-left:100px;
+    padding: 10px;
+    border-radius: 0px 0px 10px 10px;
 }
 
 .inputContainer{

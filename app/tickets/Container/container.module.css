@@ -1,6 +1,7 @@
 .parentTicketContainer {
     padding: 0 100px;
     background-color: #f1f2f8;
+    height: 80vh;
 }
 
 .mainFlightInfo {
@@ -13,8 +14,10 @@
 }
 
 .ticketArea {
-    width: 100%;
+    width: 70%;
     display: flex;
+    height: calc(70vh - 10px);
+    overflow-y: scroll;
 }
 
 .sidebarTotal {

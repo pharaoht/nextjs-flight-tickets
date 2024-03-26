@@ -97,7 +97,7 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
 
     const baseStr = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&locale=en';
     const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
-    const lstStr = '&limit=50';
+    const lstStr = '&limit=25';
 
     let qStr = '';
     params.map((itm, idx) => {

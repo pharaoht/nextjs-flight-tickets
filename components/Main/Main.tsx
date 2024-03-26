@@ -2,6 +2,7 @@ import { useContext } from 'react';
 import styles from './main.module.css';
 import FlightContext from '@/context/flightState';
 import { CircularProgress, IconButton } from '@mui/material';
+import Ticket from '../Ticket/Ticket';
 
 interface PropsForMain {
     isLoading: boolean;
@@ -26,7 +27,20 @@ const Main = ({ isLoading }: PropsForMain) => {
     const renderFlights = () => (
 
         flightData.map((itm,idx) => (
-            <div>{itm.cityFromCode} - {itm.cityToCode}</div>
+           <Ticket key={itm.cityFrom} 
+            cityFrom={''}
+            cityTo={''}
+            departDate={''}
+            arriveDate={''}
+            link={''}
+            stops={''}
+            type={''}
+            airlines={[]}
+            countryFrom={''}
+            countryTo={''}
+            durationDepart={''}
+            durationReturn={''}
+           />
         ))
     );
 
