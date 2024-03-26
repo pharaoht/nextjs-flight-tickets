@@ -25,13 +25,14 @@ const Main = ({ isLoading }: PropsForMain) => {
     );
 
     const renderFlights = () => (
-
+        
         flightData.map((itm,idx) => (
-           <Ticket key={itm.cityFrom} 
-            cityFrom={''}
-            cityTo={''}
-            departDate={''}
-            arriveDate={''}
+            
+           <Ticket key={idx} 
+            cityFrom={itm.airportFromCode}
+            cityTo={itm.airportToCode}
+            departDate={itm.localDeparture}
+            arriveDate={itm.localArrival}
             link={''}
             stops={''}
             type={''}
@@ -40,10 +41,12 @@ const Main = ({ isLoading }: PropsForMain) => {
             countryTo={''}
             durationDepart={''}
             durationReturn={''}
+            price={itm.farePrice}
            />
         ))
     );
-
+    
+    console.log(flightData)
     return(
         <div className={styles.container}>
             { isLoading && loadingPrompt() }

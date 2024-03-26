@@ -3,7 +3,7 @@ import moment from 'moment';
 
 export const formatDateStringStamp = (inputDateString: string) => {
 
-    return moment(inputDateString).format('MM/DD/YYYY hh:mm A');
+    return moment(inputDateString).format('h:mm A');
 }
 
 export const requestApiObject = ( searchvalue: string ) => {
@@ -32,6 +32,10 @@ export const requestFlightsApiObject = ( url: string) => {
             apikey: `${APIKEY}`
         }
     }
+}
+
+export const formatLayovers = (route: []) => {
+    
 }
 
 export const formatFlightData = ( flightData: any) => {
