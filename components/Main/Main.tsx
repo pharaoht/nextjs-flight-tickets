@@ -42,11 +42,12 @@ const Main = ({ isLoading }: PropsForMain) => {
             durationDepart={''}
             durationReturn={''}
             price={itm.farePrice}
+            departureFlights={itm.departureFlights}
+            returnFlights={itm.returnFlights}
            />
         ))
     );
     
-    console.log(flightData)
     return(
         <div className={styles.container}>
             { isLoading && loadingPrompt() }

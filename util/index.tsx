@@ -1,3 +1,4 @@
+import { FROMLOCATION, TOLOCATION } from '@/constants';
 import moment from 'moment';
 
 
@@ -34,13 +35,30 @@ export const requestFlightsApiObject = ( url: string) => {
     }
 }
 
-export const formatLayovers = (route: []) => {
-    
+export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal: Number } => {
+
+    let returnTotal = 0;
+    let departTotal = 0;
+    console.log(route)
+    route.forEach(item => {
+
+        if(item.return === 0) departTotal++;
+        else returnTotal++;
+
+    })
+
+    return { returnTotal, departTotal };
 }
 
-export const formatFlightData = ( flightData: any) => {
+export const formatFlightData = ( flightData: any ) => {
 
     const data = flightData.data;
+
+    const route = data[0]?.route;
+
+    const layOverData = formatLayovers(route);
+
+    const { returnTotal, departTotal } = layOverData;
 
     const formattedData = data.map((itm: any) => {
         return {
@@ -53,7 +71,9 @@ export const formatFlightData = ( flightData: any) => {
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),
             localDeparture: formatDateStringStamp(itm.local_departure),
-            link: itm.deep_link
+            link: itm.deep_link,
+            departureFlights: `${departTotal}`,
+            returnFlights: `${returnTotal}`,
         }
     });
 
