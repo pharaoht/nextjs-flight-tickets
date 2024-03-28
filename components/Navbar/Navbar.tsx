@@ -31,8 +31,9 @@ const Navbar = () => {
 
 
     return (
-        <nav className={styles.container}>
+        <nav className={`${styles.container} ${styles.active}`}>
             <Link href='/' className={styles.logo}>Travel</Link>
+            <div id='toggle' className={`${styles.toggle} ${styles.activate}`}></div>
             <div className={styles.group} id='navbar'>
                 <ul className={styles.navigation}>
                     { renderLinks() }

@@ -7,6 +7,17 @@ export const formatDateStringStamp = (inputDateString: string) => {
     return moment(inputDateString).format('h:mm A');
 }
 
+export const calculateDays = (departureTime: string, arrivalTime: string): string => {
+    const dt = moment(departureTime);
+    const at = moment(arrivalTime);
+
+    // Calculate the difference in days
+    const daysDifference = at.diff(dt, 'days');
+
+    return String(daysDifference)
+
+}
+
 export const requestApiObject = ( searchvalue: string ) => {
 
     const APIKEY = process.env.NEXT_PUBLIC_API_KEY;
@@ -61,6 +72,7 @@ export const formatFlightData = ( flightData: any ) => {
     const { returnTotal, departTotal } = layOverData;
 
     const formattedData = data.map((itm: any) => {
+
         return {
             cityFromCode: itm.cityFrom,
             cityToCode: itm.cityTo,
@@ -74,6 +86,7 @@ export const formatFlightData = ( flightData: any ) => {
             link: itm.deep_link,
             departureFlights: `${departTotal}`,
             returnFlights: `${returnTotal}`,
+            flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival)
         }
     });
 

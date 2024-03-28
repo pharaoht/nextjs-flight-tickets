@@ -117,7 +117,17 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
             </Box>
             <Box
                 component="form"
-                sx={{'& .MuiTextField-root': {width:'20vw'}}}
+                sx={{
+                    '& .MuiTextField-root': {
+                        width: '20vw', // Default width
+                        '@media (max-width: 1100px)': {
+                            width: '15vw', // Remove width on small screens
+                        },
+                        '@media (max-width: 991px)': {
+                            width: '100%', // Remove width on small screens
+                        },
+                    }
+                }}
             >
                 <div className={styles.inputContainer}>
                     <AirportLocationField

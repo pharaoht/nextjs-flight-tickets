@@ -103,7 +103,7 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
                             <h2 className={styles.sdh2}>{toAirportLocation}</h2>
                         </div>
                     </div>
-                    <div className={`${styles.sdHolder} ${styles.sdDates}`}>
+                    <div className={`${styles.sdDates}`}>
                         <div className={styles.sdDate}>
                             <span className={styles.sdChev} onClick={() => decrementDate(DEPARTURE)}>{'<'}</span>
                             <span>{departureDate}</span>

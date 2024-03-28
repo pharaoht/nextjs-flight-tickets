@@ -44,6 +44,7 @@ const Main = ({ isLoading }: PropsForMain) => {
             price={itm.farePrice}
             departureFlights={itm.departureFlights}
             returnFlights={itm.returnFlights}
+            departFlightDays={itm.flightDaysDepart}
            />
         ))
     );

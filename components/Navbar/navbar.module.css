@@ -34,7 +34,8 @@
 
 .linkListItem{
     list-style: none;
-        font-size: large;
+    font-size: large;
+    font-weight: 400;
 }
 
 .active{
@@ -65,7 +66,89 @@
 }
 
 
-@media (max-width: 767px) {
+
+@media (max-width: 991px) {
+
+    .container{
+        position: fixed;
+        bottom: -100%;
+        right: 0;
+        width: 100% !important;
+        transition: 0.5;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        padding: 0;
+    }
+
+    .logo{
+        margin-bottom: 60px;
+    }
+
+    /* .active {
+        z-index: 10;
+        height:100vh;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+    } */
+
+    .navigation{
+        gap: 60px;
+        flex-direction: column;
+        align-items: center;
+    }
+
+
+    .toggle {
+        z-index: 999;
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 60px;
+        height: 60px;
+        background: #00a698;
+        cursor: pointer;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .toggle::before {
+        content: "";
+        position: absolute;
+        width: 28px;
+        height: 2px;
+        background-color: #fff;
+        transform: translateY(-5px);
+        transition: 0.2s;
+    }
+
+    .toggle::after {
+        content: "";
+        position: absolute;
+        width: 28px;
+        height: 2px;
+        background-color: #fff;
+        transform: translateY(5px);
+        transition: 0.2s;
+    }
+
+    .toggle.activate::before {
+        transform: translateY(0px) rotate(45deg);
+    }
+
+    .toggle.activate::after {
+        transform: translateY(0px) rotate(-45deg);
+    }
+
+    .toggle.activate {
+        background: #ff5a26;;
+    }
+}
+
+/* @media (max-width: 767px) {
     #navbar {
         display: none;
     }
@@ -79,4 +162,4 @@
         height: 100vh;
     }
 
-}
+} */

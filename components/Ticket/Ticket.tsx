@@ -20,9 +20,10 @@ interface ticketProps {
     price:string;
     departureFlights: string;
     returnFlights:string;
+    departFlightDays:string;
 }
 
-const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights}: ticketProps) => {
+const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays}: ticketProps) => {
 
     const isGreenOrRed = ( departOrReturn: string ): string => {
         
@@ -33,7 +34,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
         return styles.circleRed;
     };
 
-    const smTxt = ( departOrReturn:string): JSX.Element => <b>{ departOrReturn > '1' && departOrReturn }</b>
+    const smTxt = ( departOrReturn:string): JSX.Element => <b>{ departOrReturn > '1' && departOrReturn } </b>
         
     const isDirect = (departOrReturn: string): JSX.Element => <>{ departOrReturn == '1' ? 'Direct' : 'Stops' }</>
 
@@ -54,7 +55,10 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                 </div>
                 <div className={styles.toContainer}>
                     <span>{cityTo}</span>
-                    <span><b>{arriveDate}</b></span>
+                    <span>
+                        <b>{arriveDate}</b>
+                        <span className={styles.tinyText}>{Number(departFlightDays) > 0 && `+${departFlightDays}`}</span>
+                    </span>
                 </div>
                 
             </div>

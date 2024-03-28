@@ -22,7 +22,7 @@
 }
 
 .sdHolder {
-    width: 50%;
+    width: 65%;
     display: flex;
 }
 
@@ -33,10 +33,11 @@
 
 .sdh2 {
     color: #fff;
+    white-space: nowrap;
 }
 
 .sdsrchholder {
-    width: 15%;
+    width: 100px;
 }
 
 #sd-icon {
@@ -45,9 +46,11 @@
 }
 
 .sdDates {
-    justify-content: end;
+    justify-content: flex-end;
     padding: 10px 0px;
     color: #fff;
+    width: 45%;
+    display: flex;
 }
 
 .sdDate {
@@ -96,148 +99,6 @@
     color: #fff;
 }
 
-.sd-hover {
-    color: #fff;
-    padding: 0px 10px;
-}
-
-.sd-dates-travel {
-    display: flex;
-}
-
-.sd-checks {
-    width: 25%;
-}
-
-.sd-checks div p {
-    color: #fff;
-}
-
-.sd-cabin div p {
-    color: #fff;
-}
-
-.search-form input[type="text"] {
-    border-radius: 5px;
-    height: 50px;
-}
-
-.sd-cabin {
-    display: flex;
-    width: 50%;
-}
-
-.sd-cabin div input[type="submit"] {
-    width: 100%;
-    height: 50px;
-    padding: 5px;
-    border-radius: 5px;
-}
-
-.sd-cabin .sd-find-btn div p {
-    color: #042759;
-}
-
-.sd-hover:hover {
-    color: #00a698;
-}
-
-.sd-location-holder {
-    width: 25%;
-    position: absolute;
-    background: #fff;
-    border-radius: 5px;
-    z-index: 10;
-    padding-bottom: 25px;
-    box-shadow: 0px 5px 5px darkgrey;
-}
-
-.sd-li-pad {
-    padding-left: 25px;
-}
-
-.arrow-up {
-    margin-left: 25%;
-    width: 0;
-    height: 0;
-    border-left: 10px solid transparent;
-    border-right: 10px solid transparent;
-    border-bottom: 10px solid #fff;
-}
-
-.sd-ca-cl-tr {
-    margin: 0px 20px;
-    animation: fade-in 0.1s;
-}
-
-.sd-dropdown-holder {
-    z-index: 14;
-    width: 30%;
-    background: #fff;
-    padding: 10px;
-    position: absolute;
-    box-shadow: 0px 5px 5px darkgrey;
-    border-radius: 5px;
-}
-
-.sd-dropdown-holder .sd-cab-title {
-    text-align: center;
-    font-size: larger;
-    color: black;
-}
-
-.sd-travelers {
-    display: flex;
-    margin: 15px 0px;
-}
-
-.sd-cabin-holder {
-    width: 80%;
-}
-
-.sd-number-of-travelers {
-    display: flex;
-}
-
-.sd-number-of-travelers {
-    display: flex;
-    width: 75%;
-    justify-content: space-around;
-    align-items: center;
-}
-
-.sd-travel-type {
-    width: 25%;
-    text-align: center;
-}
-
-#sd-icon-minus-ad {
-    font-size: x-large;
-    color: red;
-    cursor: pointer;
-}
-
-#sd-icon-minus-ad:hover {
-    transform: scale(1.1);
-    transition: all 0.3s;
-}
-
-#sd-icon-plus-ad {
-    font-size: x-large;
-    color: #00a698;
-    cursor: pointer;
-}
-
-#sd-icon-plus-ad:hover {
-    transform: scale(1.1);
-    transition: all 0.3s;
-}
-
-#sd-icon-minus-disabled {
-    color: gray;
-    cursor: not-allowed;
-}
-
 @keyframes fade-in {
     0% {
         opacity: 0;
@@ -250,57 +111,34 @@
     }
 }
 
-@media (max-width: 767px) {
-    .is-sticky {
-        position: static;
-        width: 100%;
-        left: 5;
-        z-index: 999;
-        top: 0;
+@media (max-width: 991px) {
+
+    .sdSeprator{
+        flex-direction: column;
     }
 
-    .sdAirportHolder {
+    .sdh2{
+        font-size: 20px;
+    }
+
+    .sdDates{
+        width: 100%;
+        justify-content: space-around;
+    }
+
+    .sdAirportHolder{
         display: flex;
         width: 100%;
-        padding: 10px 0px;
+        justify-content: center;
     }
 
-    .sdHolder {
-        width: 100%;
+    .sdsrchholder{
 
+        width: auto;
     }
 
-    .sdSeprator {
-        display: contents;
-        margin-bottom: 10px;
-    }
-
-    .sd-from-to-airport {
-        display: block;
-    }
-
-    .sd-airport {
+    .sdHolder{
         width: 100%;
     }
 
-    .sd-dates-travel {
-        display: block;
-    }
-
-    .sd-checks {
-        width: 100%;
-    }
-
-    .sd-cabin {
-        display: block;
-        width: 100%;
-    }
-
-    .sd-cabin-holder {
-        width: 100%;
-    }
-
-    .sd-dropdown-holder {
-        width: 80%;
-    }
 }

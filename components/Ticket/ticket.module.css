@@ -64,6 +64,11 @@
     transform: translateY(-50%);
 }
 
+.tinyText{
+    font-size: 12px;
+    float: inline-end;
+}
+
 @media (max-width: 1100px) {
 
     .container {
