@@ -22,6 +22,11 @@
     gap:10px
 }
 
+.passengerRow{
+    display: flex;
+    gap:10px
+}
+
 .filterContainer>*:last-child {
     margin-left: auto;
 }
@@ -41,13 +46,29 @@
         position: absolute;
         background-color: #042759;
         top:0;
-        margin-top: 100px;
-        margin-left: 0px;
         left: 0;
-        width: 95vw;
+        right: 0;
+        margin-top: 125px;
+        margin-left: 0px;
         padding: 10px;
         border-radius: 0px 0px 10px 10px;
         z-index: 10;
+        width: inherit;
+    }
+
+    .filterContainer{
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .passengerRow{
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .small {
+        width: 75px;
     }
 
     .inputContainer {

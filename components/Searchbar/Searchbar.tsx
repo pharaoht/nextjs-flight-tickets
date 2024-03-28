@@ -92,6 +92,7 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
                             <Button 
                                 color={isExpanded ? 'error' : 'primary'}
                                 variant="contained"
+                                size='small'
                                 onClick={() => setIsExpanded(prev => !prev)}
                             >{isExpanded ? <ExpandLessIcon /> : <ExpandMoreIcon />}
                             </Button>
@@ -99,7 +100,7 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
                         </div>
                         <div className={styles.sdAirportHolder}>
                             <h2 className={styles.sdh2}>{fromAirportLocation}</h2>
-                            <h2 className={styles.sdh2}><FlightTakeoffIcon sx={{ color:'#00a698' }} /></h2>
+                            <span className={styles.sdh2}>{`->`}</span>
                             <h2 className={styles.sdh2}>{toAirportLocation}</h2>
                         </div>
                     </div>

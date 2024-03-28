@@ -105,7 +105,6 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
     return (
         <div className={styles.container}>
             <Box
-                component="form"
                 sx={{'& .MuiTextField-root': {width: '20vw' },}}
             >
                 <div>
@@ -116,15 +115,14 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
                 </div>
             </Box>
             <Box
-                component="form"
                 sx={{
                     '& .MuiTextField-root': {
                         width: '20vw', // Default width
                         '@media (max-width: 1100px)': {
-                            width: '15vw', // Remove width on small screens
+                            width: '15vw',
                         },
                         '@media (max-width: 991px)': {
-                            width: '100%', // Remove width on small screens
+                            width: '100%',
                         },
                     }
                 }}
@@ -182,33 +180,35 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
                         handleChange={handleFormStateChange}
                         inputValue={formState[CABIN]}
                     />
-                    <PassengerField
-                        label='Adults'
-                        id='adultField'
-                        className={`${styles.whiteBackGround} ${styles.small}`}
-                        value={formState[ADULTS]}
-                        inputProps={{ min: 0, max: 9 }}
-                        paramName={ADULTS}
-                        handleChange={handleFormStateChange}
-                    />
-                    <PassengerField
-                        label='Children'
-                        id='childrenField'
-                        className={`${styles.whiteBackGround} ${styles.small}`}
-                        value={formState[CHILDREN]}
-                        inputProps={{ min: 0, max: 9 }}
-                        paramName={CHILDREN}
-                        handleChange={handleFormStateChange}
-                    />
-                    <PassengerField
-                        label='Infants'
-                        id='infantsField'
-                        value={formState[INFANTS]}
-                        className={`${styles.whiteBackGround} ${styles.small}`}
-                        inputProps={{ min: 0, max: 9, }}
-                        paramName={INFANTS}
-                        handleChange={handleFormStateChange}
-                    />
+                    <div className={styles.passengerRow}>
+                        <PassengerField
+                            label='Adults'
+                            id='adultField'
+                            className={`${styles.whiteBackGround} ${styles.small}`}
+                            value={formState[ADULTS]}
+                            inputProps={{ min: 0, max: 9 }}
+                            paramName={ADULTS}
+                            handleChange={handleFormStateChange}
+                        />
+                        <PassengerField
+                            label='Children'
+                            id='childrenField'
+                            className={`${styles.whiteBackGround} ${styles.small}`}
+                            value={formState[CHILDREN]}
+                            inputProps={{ min: 0, max: 9 }}
+                            paramName={CHILDREN}
+                            handleChange={handleFormStateChange}
+                        />
+                        <PassengerField
+                            label='Infants'
+                            id='infantsField'
+                            value={formState[INFANTS]}
+                            className={`${styles.whiteBackGround} ${styles.small}`}
+                            inputProps={{ min: 0, max: 9, }}
+                            paramName={INFANTS}
+                            handleChange={handleFormStateChange}
+                        />
+                    </div>
                     <CurrencySelection
                         handleChange={handleFormStateChange}
                         inputValue={formState[CURRENCY]}
