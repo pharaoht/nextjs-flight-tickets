@@ -29,22 +29,25 @@ const Main = ({ isLoading }: PropsForMain) => {
         flightData.map((itm,idx) => (
             
            <Ticket key={idx} 
-            cityFrom={itm.airportFromCode}
-            cityTo={itm.airportToCode}
-            departDate={itm.localDeparture}
-            arriveDate={itm.localArrival}
-            link={''}
-            stops={''}
-            type={''}
-            airlines={[]}
-            countryFrom={''}
-            countryTo={''}
-            durationDepart={''}
-            durationReturn={''}
-            price={itm.farePrice}
-            departureFlights={itm.departureFlights}
-            returnFlights={itm.returnFlights}
-            departFlightDays={itm.flightDaysDepart}
+                cityFrom={itm.airportFromCode}
+                cityTo={itm.airportToCode}
+                departDate={itm.localDeparture}
+                arriveDate={itm.localArrival}
+                returnDepartDate={itm.returnDepartLocal}
+                returnArriveDate={itm.returnArrivalLocal}
+                link={''}
+                stops={''}
+                type={''}
+                airlines={[]}
+                countryFrom={''}
+                countryTo={''}
+                durationDepart={''}
+                durationReturn={''}
+                price={itm.farePrice}
+                departureFlights={itm.departureFlights}
+                returnFlights={itm.returnFlights}
+                departFlightDays={itm.flightDaysDepart}
+                returnFlightDays={itm.flightDaysReturn}
            />
         ))
     );

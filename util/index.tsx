@@ -6,14 +6,13 @@ export const formatDateStringStamp = (inputDateString: string) => {
     return moment(inputDateString).format('h:mm A');
 }
 
-export const calculateDays = (departureTime: string, arrivalTime: string): string => {
-    const dt = moment(departureTime);
-    const at = moment(arrivalTime);
+export const calculateDays = (departureTime: string, arrivalTime: string ): string => {
 
-    // Calculate the difference in days
-    const daysDifference = at.diff(dt, 'days');
+    const dt = moment(departureTime).format('DD');
+    const at = moment(arrivalTime).format('DD');
 
-    return String(daysDifference)
+    const dayDiff = Number(at) - Number(dt);
+    return String(dayDiff)
 
 }
 
@@ -70,6 +69,26 @@ export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal
 
 export const getReturnFlightTimes = (route: any[]) => {
 
+    if(route.length === 0) return;
+
+    const returnFlights = route.filter(itm => itm.return === 1 && itm );
+
+    const lastIndex = returnFlights.length - 1;
+
+    if(returnFlights.length > 1){
+
+        const departTime = returnFlights[0].local_departure;
+
+        const arriveTime = returnFlights[lastIndex].local_arrival;
+
+        return { departTime, arriveTime}
+    }
+
+    const departTime = returnFlights[0].local_departure;
+    const arriveTime = returnFlights[0].local_arrival;
+
+    return { departTime, arriveTime }
+
 }
 
 export const formatFlightData = ( flightData: any ) => {
@@ -78,12 +97,11 @@ export const formatFlightData = ( flightData: any ) => {
 
     const formattedData = data.map((itm: any) => {
 
-        console.log(itm)
         const route = itm.route;
 
-        const layOverData = formatLayovers(route);
+        const { returnTotal, departTotal }  = formatLayovers(route);
 
-        const { returnTotal, departTotal } = layOverData;
+        const returnTimes = getReturnFlightTimes(route);
 
         return {
             cityFromCode: itm.cityFrom,
@@ -95,15 +113,16 @@ export const formatFlightData = ( flightData: any ) => {
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),
             localDeparture: formatDateStringStamp(itm.local_departure),
-            returnDepartLocal: formatDateStringStamp(''),
-            returnArrivalLocal: formatDateStringStamp(''),
+            returnDepartLocal: formatDateStringStamp(returnTimes?.departTime),
+            returnArrivalLocal: formatDateStringStamp(returnTimes?.arriveTime),
             link: itm.deep_link,
             departureFlights: `${departTotal}`,
             returnFlights: `${returnTotal}`,
             durationDeparture: secondsToHours(itm.duration.departure),
             durationReturn: secondsToHours(itm.duration.return),
             totalDuration: secondsToHours(itm.duration.total),
-            flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival)
+            flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival),
+            flightDaysReturn: calculateDays(returnTimes?.departTime, returnTimes?.arriveTime),
         }
     });
 

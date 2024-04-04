@@ -8,6 +8,8 @@ interface ticketProps {
     cityTo?: string;
     departDate?: string;
     arriveDate?: string;
+    returnDepartDate?: string;
+    returnArriveDate?:string;
     link?:string;
     stops?:string;
     type?:string;
@@ -20,9 +22,12 @@ interface ticketProps {
     departureFlights: string;
     returnFlights:string;
     departFlightDays:string;
+    returnFlightDays:string;
+
+
 }
 
-const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays}: ticketProps) => {
+const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate}: ticketProps) => {
 
     const isGreenOrRed = ( departOrReturn: string ): string => {
         
@@ -66,7 +71,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                 <div className={styles.headerContainer}>
                     <div className={styles.subHeaderContainer}>
                         <span>{cityTo}</span>
-                        <span><b></b></span>
+                        <span><b>{returnDepartDate}</b></span>
                     </div>
                     <div className={styles.line}>
                         <span className={styles.smTxt}>{smTxt(returnFlights)}</span>
@@ -75,7 +80,10 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                     </div>
                     <div className={styles.toContainer}>
                         <span>{cityFrom}</span>
-                        <span><b></b></span>
+                        <span>
+                            <b>{returnArriveDate}</b>
+                            <span className={styles.tinyText}>{Number(returnFlightDays) > 0 && `+${returnFlightDays}`}</span>
+                        </span>
                     </div>
                     
                 </div>
