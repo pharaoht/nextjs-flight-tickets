@@ -83,7 +83,7 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
     const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
         validateForm()
-        // setMultipleUrlParams(formState);
+        setMultipleUrlParams(formState);
         setExpanded(false);
     }
 
