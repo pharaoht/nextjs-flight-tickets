@@ -1,11 +1,20 @@
 import React from 'react'
 import TimeSlider from '../TimeSlider/TimeSlider';
+import useURLParams from '@/hooks/useUrlParams';
+import { ONEWAY, RETURN } from '@/constants';
 
 const Sidebar = () => {
+
+  const { getUrlParamsValue } = useURLParams();
+
+  const isReturn = getUrlParamsValue(RETURN);
+
   return (
     <div>
         <TimeSlider title='Departure Flight' />
-        <TimeSlider title='Return Flight' />
+        { isReturn !== ONEWAY &&
+          <TimeSlider title='Return Flight' />
+        }
     </div>
   )
 }
