@@ -68,18 +68,23 @@ export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal
     return { returnTotal, departTotal };
 }
 
+export const getReturnFlightTimes = (route: any[]) => {
+
+}
+
 export const formatFlightData = ( flightData: any ) => {
 
     const data = flightData.data;
 
-    const route = data[0]?.route;
-
-    const layOverData = formatLayovers(route);
-
-    const { returnTotal, departTotal } = layOverData;
-
     const formattedData = data.map((itm: any) => {
+
         console.log(itm)
+        const route = itm.route;
+
+        const layOverData = formatLayovers(route);
+
+        const { returnTotal, departTotal } = layOverData;
+
         return {
             cityFromCode: itm.cityFrom,
             cityToCode: itm.cityTo,

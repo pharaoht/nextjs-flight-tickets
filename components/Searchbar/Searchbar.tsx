@@ -6,8 +6,7 @@ import { Suspense, useEffect, useState } from 'react';
 import SearchForm from '../SearchbarForm/SearchbarForm';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import { Button, Box } from '@mui/material';
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import Button from '@mui/material/Button/Button';
 
 interface SearchAdvanceProps {
     getFlights: (...args:any) => void;

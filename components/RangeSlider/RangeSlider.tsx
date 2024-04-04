@@ -5,12 +5,14 @@ import Slider from '@mui/material/Slider/Slider';
 interface RangeSliderProps {
     value: number[];
     handleChange: (event: Event, newValue: number | number[], activeThumb: number) => void;
+    leftLabel: string;
+    rightLabel:string;
 }
 
-const RangeSlider = ({ value, handleChange}: RangeSliderProps) => (
+const RangeSlider = ({ value, handleChange, leftLabel, rightLabel}: RangeSliderProps) => (
     <Box sx={{ width: '100%' }}>
         <Stack spacing={2} direction='row' alignItems='center'>
-            <span>{value[0]}:00</span>
+            <span>{leftLabel}</span>
             <Slider
                 value={value}
                 onChange={handleChange}
@@ -18,7 +20,7 @@ const RangeSlider = ({ value, handleChange}: RangeSliderProps) => (
                 max={23}
                 disableSwap
             />
-            <span>{value[1]}:00</span>
+            <span>{rightLabel}</span>
         </Stack>
     </Box>
 )

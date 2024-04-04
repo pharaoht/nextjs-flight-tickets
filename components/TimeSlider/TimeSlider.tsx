@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
 import styles from './timeSlider.module.css';
+import Stack from '@mui/material/Stack/Stack';
+import RangeSlider from '../RangeSlider/RangeSlider';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import RangeSlider from '../RangeSlider/RangeSlider';
-import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
+import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
 
 
 const MINDISTANCE = 2;
@@ -57,18 +58,18 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                 <div className={styles.iconHolder}>
                     { isHidden &&
                         <>
-                            <div>
-                                <FlightTakeoffIcon style={{ fontSize: 15, marginRight: '2px' }}/> 
+                            <Stack direction='row' >
+                                <FlightTakeoffIcon style={{ fontSize: 14, marginRight: '2px' }}/> 
                                 <span>
                                     {`${obSliderValue[0]}:00 - ${obSliderValue[1]}:00`}
                                 </span>
-                            </div>
-                            <div>
-                                <FlightLandIcon style={{ fontSize: 15, marginRight: '2px' }}/> 
+                            </Stack>
+                            <Stack direction='row' >
+                                <FlightLandIcon style={{ fontSize: 14, marginRight: '2px' }}/> 
                                 <span>
                                     {`${returnSliderValue[0]}:00 - ${returnSliderValue[1]}:00`}
                                 </span>
-                            </div>
+                            </Stack>
                         </>
                     }
                 </div>
@@ -88,7 +89,9 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                     <div>
                         <RangeSlider 
                             value={obSliderValue} 
-                            handleChange={obSliderHandleChange} 
+                            handleChange={obSliderHandleChange}
+                            leftLabel={`${obSliderValue[0]}:00`}
+                            rightLabel={`${obSliderValue[1]}:00`}
                         />
                     </div>
 
@@ -99,6 +102,8 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                         <RangeSlider 
                             value={returnSliderValue} 
                             handleChange={returnSliderHandleChange} 
+                            leftLabel={`${returnSliderValue[0]}:00`}
+                            rightLabel={`${returnSliderValue[1]}:00`}
                         />
                     </div>
                 </div>

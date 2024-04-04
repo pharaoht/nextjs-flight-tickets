@@ -75,7 +75,7 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
     const validateForm = () => {
         let isError = false;
         for(const key in formState){
-            const k = key
+            //add logic to validate
            
         }
     }
