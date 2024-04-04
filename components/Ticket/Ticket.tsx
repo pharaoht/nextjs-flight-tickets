@@ -23,11 +23,10 @@ interface ticketProps {
     returnFlights:string;
     departFlightDays:string;
     returnFlightDays:string;
-
-
+    toggleDialog: () => void;
 }
 
-const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate}: ticketProps) => {
+const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate, toggleDialog}: ticketProps) => {
 
     const isGreenOrRed = ( departOrReturn: string ): string => {
         
@@ -97,6 +96,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                     color={PRIMARY}
                     variant="contained"
                     sx={{'height':'3vh'}}
+                    onClick={toggleDialog}
                 >Details
                 </Button>
             </div>

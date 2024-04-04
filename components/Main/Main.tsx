@@ -1,14 +1,17 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import styles from './main.module.css';
 import FlightContext from '@/context/flightState';
 import { CircularProgress, IconButton } from '@mui/material';
 import Ticket from '../Ticket/Ticket';
+import Dialog from '../Modal/Modal';
 
 interface PropsForMain {
     isLoading: boolean;
 }
 
 const Main = ({ isLoading }: PropsForMain) => {
+
+    const [isDialogOpen, setIsDialogOpen ] = useState<boolean>(false);
 
     const flightContext = useContext(FlightContext);
 
@@ -23,6 +26,8 @@ const Main = ({ isLoading }: PropsForMain) => {
             <CircularProgress size={20} />
         </IconButton>
     );
+
+    const toggleIsOpen = () => setIsDialogOpen(prevState => !prevState);
 
     const renderFlights = () => (
         
@@ -48,6 +53,7 @@ const Main = ({ isLoading }: PropsForMain) => {
                 returnFlights={itm.returnFlights}
                 departFlightDays={itm.flightDaysDepart}
                 returnFlightDays={itm.flightDaysReturn}
+                toggleDialog={toggleIsOpen}
            />
         ))
     );
@@ -57,6 +63,7 @@ const Main = ({ isLoading }: PropsForMain) => {
             { isLoading && loadingPrompt() }
             { !isLoading && flightData.length === 0 && noFlightsPrompt() }
             { !isLoading && flightData.length > 0 && renderFlights() }
+            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen} />
         </div>
     )
 }
