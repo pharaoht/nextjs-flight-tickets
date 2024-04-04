@@ -50,7 +50,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
             <div className={styles.headerContainer}>
                 <div className={styles.subHeaderContainer}>
                     <span>{cityFrom}</span>
-                    <span><b>{departDate}</b></span>
+                    <span><b className={styles.tinyDate}>{departDate}</b></span>
                 </div>
                 <div className={styles.line}>
                     <span className={styles.smTxt}>{smTxt(departureFlights)}</span>
@@ -60,7 +60,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                 <div className={styles.toContainer}>
                     <span>{cityTo}</span>
                     <span>
-                        <b>{arriveDate}</b>
+                        <b className={styles.tinyDate}>{arriveDate}</b>
                         <span className={styles.tinyText}>{Number(departFlightDays) > 0 && `+${departFlightDays}`}</span>
                     </span>
                 </div>
@@ -71,7 +71,9 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                 <div className={styles.headerContainer}>
                     <div className={styles.subHeaderContainer}>
                         <span>{cityTo}</span>
-                        <span><b>{returnDepartDate}</b></span>
+                        <span>
+                            <b className={styles.tinyDate}>{returnDepartDate}</b>
+                        </span>
                     </div>
                     <div className={styles.line}>
                         <span className={styles.smTxt}>{smTxt(returnFlights)}</span>
@@ -81,7 +83,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                     <div className={styles.toContainer}>
                         <span>{cityFrom}</span>
                         <span>
-                            <b>{returnArriveDate}</b>
+                            <b className={styles.tinyDate}>{returnArriveDate}</b>
                             <span className={styles.tinyText}>{Number(returnFlightDays) > 0 && `+${returnFlightDays}`}</span>
                         </span>
                     </div>

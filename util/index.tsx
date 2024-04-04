@@ -2,11 +2,14 @@ import moment from 'moment';
 
 
 export const formatDateStringStamp = (inputDateString: string) => {
+    if(inputDateString === null) return '';
 
-    return moment(inputDateString).format('h:mm A');
+    return moment(inputDateString).format('h:mm a');
 }
 
 export const calculateDays = (departureTime: string, arrivalTime: string ): string => {
+
+    if(departureTime === null || arrivalTime === null) return '';
 
     const dt = moment(departureTime).format('DD');
     const at = moment(arrivalTime).format('DD');
@@ -101,7 +104,10 @@ export const formatFlightData = ( flightData: any ) => {
 
         const { returnTotal, departTotal }  = formatLayovers(route);
 
-        const returnTimes = getReturnFlightTimes(route);
+        const returnTimes = Number(returnTotal) > 0 ? getReturnFlightTimes(route) : null
+
+        const returnDepartTime = returnTimes ? returnTimes.departTime: null
+        const returnArriveTime = returnTimes ? returnTimes.arriveTime: null
 
         return {
             cityFromCode: itm.cityFrom,
@@ -113,8 +119,8 @@ export const formatFlightData = ( flightData: any ) => {
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),
             localDeparture: formatDateStringStamp(itm.local_departure),
-            returnDepartLocal: formatDateStringStamp(returnTimes?.departTime),
-            returnArrivalLocal: formatDateStringStamp(returnTimes?.arriveTime),
+            returnDepartLocal: formatDateStringStamp(returnDepartTime),
+            returnArrivalLocal: formatDateStringStamp(returnArriveTime),
             link: itm.deep_link,
             departureFlights: `${departTotal}`,
             returnFlights: `${returnTotal}`,
@@ -122,7 +128,7 @@ export const formatFlightData = ( flightData: any ) => {
             durationReturn: secondsToHours(itm.duration.return),
             totalDuration: secondsToHours(itm.duration.total),
             flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival),
-            flightDaysReturn: calculateDays(returnTimes?.departTime, returnTimes?.arriveTime),
+            flightDaysReturn: calculateDays(returnDepartTime, returnArriveTime),
         }
     });
 

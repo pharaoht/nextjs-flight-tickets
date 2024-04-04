@@ -65,7 +65,7 @@
 }
 
 .tinyText{
-    font-size: 12px;
+    font-size: 10px;
     float: inline-end;
 }
 
@@ -80,4 +80,16 @@
         border-radius: 5px;
 
     }
+}
+
+@media (max-width: 500px){
+
+    .tinyDate{
+        font-size: 13px;
+    }
+
+        .tinyText {
+            font-size: 9px;
+            float: inline-end;
+        }
 }
