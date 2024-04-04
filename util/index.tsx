@@ -1,4 +1,3 @@
-import { FROMLOCATION, TOLOCATION } from '@/constants';
 import moment from 'moment';
 
 
@@ -15,6 +14,14 @@ export const calculateDays = (departureTime: string, arrivalTime: string): strin
     const daysDifference = at.diff(dt, 'days');
 
     return String(daysDifference)
+
+}
+
+export const secondsToHours = (seconds: number): string => {
+
+    const durationInHours = String(moment.duration(seconds, 'seconds').hours());
+
+    return durationInHours;
 
 }
 
@@ -50,7 +57,7 @@ export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal
 
     let returnTotal = 0;
     let departTotal = 0;
-    console.log(route)
+
     route.forEach(item => {
 
         if(item.return === 0) departTotal++;
@@ -72,7 +79,7 @@ export const formatFlightData = ( flightData: any ) => {
     const { returnTotal, departTotal } = layOverData;
 
     const formattedData = data.map((itm: any) => {
-
+        console.log(itm)
         return {
             cityFromCode: itm.cityFrom,
             cityToCode: itm.cityTo,
@@ -83,9 +90,14 @@ export const formatFlightData = ( flightData: any ) => {
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),
             localDeparture: formatDateStringStamp(itm.local_departure),
+            returnDepartLocal: formatDateStringStamp(''),
+            returnArrivalLocal: formatDateStringStamp(''),
             link: itm.deep_link,
             departureFlights: `${departTotal}`,
             returnFlights: `${returnTotal}`,
+            durationDeparture: secondsToHours(itm.duration.departure),
+            durationReturn: secondsToHours(itm.duration.return),
+            totalDuration: secondsToHours(itm.duration.total),
             flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival)
         }
     });

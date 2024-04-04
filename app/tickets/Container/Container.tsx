@@ -11,6 +11,7 @@ import IconButton from '@mui/material/IconButton/IconButton';
 import React, { useEffect, useContext, Suspense } from 'react';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
+import Sidebar from '@/components/Sidebar/Sidebar';
 
 const Container = () => {
 
@@ -62,7 +63,7 @@ const Container = () => {
                         <div className={styles.sidebarTotal}>
                             { renderFlightsAvailable() }
                         </div>
-                        side bar
+                        <Sidebar />
                     </div>
                     <div className={styles.ticketArea}>
                         <Main isLoading={isLoading}/>

@@ -1,0 +1,47 @@
+.parent {
+    margin-top: 10px;
+}
+
+.header {
+    display: flex;
+    justify-content:space-between;
+    border-bottom: 1px solid grey;
+}
+
+.title{
+    margin: 2px;
+    font-size: 16px;
+    min-width: 100px;
+}
+
+.iconHolder{
+    gap: 10px;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.icon {
+    cursor: pointer;
+    font-size: x-large;
+}
+
+.stops {
+    padding: 10px;
+}
+
+
+.so-hover:hover {
+    color: #00a698;
+}
+
+.sliderHolder {
+    padding: 0px 25px;
+}
+
+.outbound {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}

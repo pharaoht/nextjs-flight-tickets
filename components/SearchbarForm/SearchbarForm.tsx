@@ -72,9 +72,18 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
         }));
     };
 
+    const validateForm = () => {
+        let isError = false;
+        for(const key in formState){
+            const k = key
+           
+        }
+    }
+
     const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        setMultipleUrlParams(formState);
+        validateForm()
+        // setMultipleUrlParams(formState);
         setExpanded(false);
     }
 
@@ -156,7 +165,6 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
                             format="YYYY-MM-DD"
                             value={formState[DEPARTURE] ? moment(formState[DEPARTURE]) : null}
                             onChange={(newValue) => handleFormStateChange(DEPARTURE, String(moment(newValue).format('YYYY-MM-DD')))}
-
                         />
                         <DatePicker 
                             label="Return" 

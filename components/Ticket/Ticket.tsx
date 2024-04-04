@@ -1,7 +1,6 @@
 import styles from './ticket.module.css';
 import { Button, } from '@mui/material';
 import { PRIMARY } from '@/theme/theme';
-import Fab from '@mui/material/Fab';
 import AddIcon from '@mui/icons-material/Add';
 
 interface ticketProps {
