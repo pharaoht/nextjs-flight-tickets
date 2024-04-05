@@ -7,6 +7,7 @@ import Modal from '@mui/material/Modal';
 interface DialogProps {
     isOpen: boolean;
     handleToggle: (...args: any) => void;
+    flightData: {};
 }
 
 const style = {
@@ -14,7 +15,7 @@ const style = {
   top: '50%',
   left: '50%',
   transform: 'translate(-50%, -50%)',
-  width: '90vw',
+  width: 'calc(100vw - 100px)',
   bgcolor: 'background.paper',
   border: '2px solid #000',
   boxShadow: 24,
@@ -22,27 +23,25 @@ const style = {
 };
 
 
-const Dialog = ({ isOpen, handleToggle }: DialogProps) => {
-
+const Dialog = ({ isOpen, handleToggle, flightData }: DialogProps) => {
+    console.log(flightData)
     return (
-        <div>
-            <Button onClick={handleToggle}>Open modal</Button>
-            <Modal
-                open={isOpen}
-                onClose={handleToggle}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
-                <Box sx={style}>
+        <Modal
+            open={isOpen}
+            onClose={handleToggle}
+            aria-labelledby="modal-modal-title"
+            aria-describedby="modal-modal-description"
+        >
+            <Box sx={style}>
                 <Typography id="modal-modal-title" variant="h6" component="h2">
                     Text in a modal
                 </Typography>
                 <Typography id="modal-modal-description" sx={{ mt: 2 }}>
                     Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
                 </Typography>
-                </Box>
-            </Modal>
-        </div>
+            </Box>
+        </Modal>
+
     )
 }
 

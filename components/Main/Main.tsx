@@ -17,6 +17,16 @@ const Main = ({ isLoading }: PropsForMain) => {
 
     const flightData = flightContext?.flightData || [];
 
+    const selectedFlight = flightContext?.selectedFlight || {};
+
+    const setSelectedFlights = flightContext?.handleSelectFlights;
+
+    const handleselect = (itm: {}) => {
+        if(setSelectedFlights){
+            setSelectedFlights(itm)
+        }
+    }
+
     const noFlightsPrompt = () => (
         <div>No flights available</div>
     );
@@ -54,6 +64,7 @@ const Main = ({ isLoading }: PropsForMain) => {
                 departFlightDays={itm.flightDaysDepart}
                 returnFlightDays={itm.flightDaysReturn}
                 toggleDialog={toggleIsOpen}
+                setSelectedFlights={handleselect}
            />
         ))
     );
@@ -63,7 +74,7 @@ const Main = ({ isLoading }: PropsForMain) => {
             { isLoading && loadingPrompt() }
             { !isLoading && flightData.length === 0 && noFlightsPrompt() }
             { !isLoading && flightData.length > 0 && renderFlights() }
-            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen} />
+            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen} flightData={selectedFlight} />
         </div>
     )
 }

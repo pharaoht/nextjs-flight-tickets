@@ -24,9 +24,10 @@ interface ticketProps {
     departFlightDays:string;
     returnFlightDays:string;
     toggleDialog: () => void;
+    setSelectedFlights: (...args: any) => void;
 }
 
-const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate, toggleDialog}: ticketProps) => {
+const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate, toggleDialog, setSelectedFlights}: ticketProps) => {
 
     const isGreenOrRed = ( departOrReturn: string ): string => {
         
@@ -40,6 +41,26 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
     const smTxt = ( departOrReturn:string): JSX.Element => <b>{ departOrReturn > '1' && departOrReturn } </b>
         
     const isDirect = (departOrReturn: string): JSX.Element => <>{ departOrReturn == '1' ? 'Direct' : 'Stops' }</>
+
+    const handleButtonClick = () => {
+
+        const itemData = {
+            cityFrom, 
+            cityTo, 
+            price, 
+            arriveDate, 
+            departDate, 
+            departureFlights, 
+            returnFlights, 
+            departFlightDays, 
+            returnFlightDays, 
+            returnDepartDate, 
+            returnArriveDate, 
+        }
+    
+        setSelectedFlights(itemData);
+        toggleDialog();
+    }
 
     return (
         <div className={styles.container}>
@@ -96,7 +117,7 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
                     color={PRIMARY}
                     variant="contained"
                     sx={{'height':'3vh'}}
-                    onClick={toggleDialog}
+                    onClick={handleButtonClick}
                 >Details
                 </Button>
             </div>
