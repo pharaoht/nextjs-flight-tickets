@@ -12,7 +12,7 @@ interface RangeSliderProps {
 const RangeSlider = ({ value, handleChange, leftLabel, rightLabel}: RangeSliderProps) => (
     <Box sx={{ width: '100%' }}>
         <Stack spacing={2} direction='row' alignItems='center'>
-            <span>{leftLabel}</span>
+            <span style={{ whiteSpace: 'nowrap' }}>{leftLabel}</span>
             <Slider
                 value={value}
                 onChange={handleChange}
@@ -20,7 +20,7 @@ const RangeSlider = ({ value, handleChange, leftLabel, rightLabel}: RangeSliderP
                 max={23}
                 disableSwap
             />
-            <span>{rightLabel}</span>
+            <span style={{ whiteSpace: 'nowrap' }}>{rightLabel}</span>
         </Stack>
     </Box>
 )

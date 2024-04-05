@@ -10,8 +10,8 @@
 
 .title{
     margin: 2px;
-    font-size: 16px;
-    min-width: 140px;
+    font-size: 14px;
+    min-width: 100px;
 }
 
 .iconHolder{
@@ -44,4 +44,14 @@
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
+}
+
+
+@media (max-width: 500px) {
+
+    .title {
+        margin: 2px;
+        font-size: 13px;
+        min-width: 100px;
+    }
 }

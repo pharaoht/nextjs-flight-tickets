@@ -4,6 +4,7 @@ import FlightContext from '@/context/flightState';
 import { CircularProgress, IconButton } from '@mui/material';
 import Ticket from '../Ticket/Ticket';
 import Dialog from '../Modal/Modal';
+import Itinerary from '../Itinerary/Itinerary';
 
 interface PropsForMain {
     isLoading: boolean;
@@ -19,11 +20,11 @@ const Main = ({ isLoading }: PropsForMain) => {
 
     const selectedFlight = flightContext?.selectedFlight || {};
 
-    const setSelectedFlights = flightContext?.handleSelectFlights;
+    const setSelectedFlight = flightContext?.handleSelectFlights;
 
-    const handleselect = (itm: {}) => {
-        if(setSelectedFlights){
-            setSelectedFlights(itm)
+    const handleSelectFlight = (itm: {}) => {
+        if(setSelectedFlight){
+            setSelectedFlight(itm)
         }
     }
 
@@ -50,21 +51,22 @@ const Main = ({ isLoading }: PropsForMain) => {
                 arriveDate={itm.localArrival}
                 returnDepartDate={itm.returnDepartLocal}
                 returnArriveDate={itm.returnArrivalLocal}
-                link={''}
+                link={itm.link}
                 stops={''}
                 type={''}
                 airlines={[]}
-                countryFrom={''}
-                countryTo={''}
-                durationDepart={''}
-                durationReturn={''}
+                countryFrom={itm.countryFromName}
+                countryTo={itm.countryToName}
+                durationDepart={itm.durationDeparture}
+                durationReturn={itm.durationReturn}
+                totalDuration={itm.totalDuration}
                 price={itm.farePrice}
                 departureFlights={itm.departureFlights}
                 returnFlights={itm.returnFlights}
                 departFlightDays={itm.flightDaysDepart}
                 returnFlightDays={itm.flightDaysReturn}
                 toggleDialog={toggleIsOpen}
-                setSelectedFlights={handleselect}
+                setSelectedFlights={handleSelectFlight}
            />
         ))
     );
@@ -74,7 +76,9 @@ const Main = ({ isLoading }: PropsForMain) => {
             { isLoading && loadingPrompt() }
             { !isLoading && flightData.length === 0 && noFlightsPrompt() }
             { !isLoading && flightData.length > 0 && renderFlights() }
-            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen} flightData={selectedFlight} />
+            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen}>
+                <Itinerary flightData={selectedFlight} />
+            </Dialog>
         </div>
     )
 }

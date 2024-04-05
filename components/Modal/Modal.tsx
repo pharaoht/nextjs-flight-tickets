@@ -1,13 +1,12 @@
 import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { ReactNode } from 'react';
 
 
 interface DialogProps {
     isOpen: boolean;
     handleToggle: (...args: any) => void;
-    flightData: {};
+    children: ReactNode
 }
 
 const style = {
@@ -23,8 +22,8 @@ const style = {
 };
 
 
-const Dialog = ({ isOpen, handleToggle, flightData }: DialogProps) => {
-    console.log(flightData)
+const Dialog = ({ isOpen, handleToggle, children }: DialogProps) => {
+
     return (
         <Modal
             open={isOpen}
@@ -33,12 +32,7 @@ const Dialog = ({ isOpen, handleToggle, flightData }: DialogProps) => {
             aria-describedby="modal-modal-description"
         >
             <Box sx={style}>
-                <Typography id="modal-modal-title" variant="h6" component="h2">
-                    Text in a modal
-                </Typography>
-                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                    Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-                </Typography>
+                {children}
             </Box>
         </Modal>
 

@@ -48,13 +48,22 @@ const useDate = () => {
         return moment(returDate).isBefore(departure);
     }
 
+    const toAmPmformat = ( time24hr: string ): string => {
+
+        const time12hr = moment(time24hr, 'HH:mm').format('h:mma');
+
+        return time12hr;
+
+    }
+
     return {
         getFollowingDate,
         getPreviousDate,
         getTodayDate,
         isDateInPast,
         isDateGreater,
-        isDateLesser
+        isDateLesser,
+        toAmPmformat,
     }
 };
 

@@ -6,6 +6,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FlightLandIcon from '@mui/icons-material/FlightLand';
 import FlightTakeoffIcon from '@mui/icons-material/FlightTakeoff';
+import useDate from '@/hooks/useDate';
 
 
 const MINDISTANCE = 2;
@@ -21,6 +22,13 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
     const [ obSliderValue, setObSliderValue ] = useState<number[]>([0, 23]);
 
     const [ returnSliderValue, setReturnSliderValue ] = useState<number[]>([0, 23]);
+
+    const { toAmPmformat } = useDate();
+
+    const obStart12hr = toAmPmformat(`${obSliderValue[0]}:00`);
+    const obEnd12hr = toAmPmformat(`${obSliderValue[1]}:00`);
+    const rtStart12hr = toAmPmformat(`${returnSliderValue[0]}:00`);
+    const rtEnd12hr = toAmPmformat(`${returnSliderValue[1]}:00`);
 
     const toggleHandler = () => setIsHidden( prevState => !prevState);
 
@@ -59,15 +67,15 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                     { isHidden &&
                         <>
                             <Stack direction='row' >
-                                <FlightTakeoffIcon style={{ fontSize: 14, marginRight: '2px' }}/> 
+                                <FlightTakeoffIcon style={{ fontSize: 12, marginRight: '2px' }}/> 
                                 <span>
-                                    {`${obSliderValue[0]}:00 - ${obSliderValue[1]}:00`}
+                                    {`${obStart12hr}-${obEnd12hr}`}
                                 </span>
                             </Stack>
                             <Stack direction='row' >
-                                <FlightLandIcon style={{ fontSize: 14, marginRight: '2px' }}/> 
+                                <FlightLandIcon style={{ fontSize: 12, marginRight: '2px' }}/> 
                                 <span>
-                                    {`${returnSliderValue[0]}:00 - ${returnSliderValue[1]}:00`}
+                                    {`${rtStart12hr}-${rtEnd12hr}`}
                                 </span>
                             </Stack>
                         </>
@@ -90,8 +98,8 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                         <RangeSlider 
                             value={obSliderValue} 
                             handleChange={obSliderHandleChange}
-                            leftLabel={`${obSliderValue[0]}:00`}
-                            rightLabel={`${obSliderValue[1]}:00`}
+                            leftLabel={obStart12hr}
+                            rightLabel={obEnd12hr}
                         />
                     </div>
 
@@ -102,8 +110,8 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
                         <RangeSlider 
                             value={returnSliderValue} 
                             handleChange={returnSliderHandleChange} 
-                            leftLabel={`${returnSliderValue[0]}:00`}
-                            rightLabel={`${returnSliderValue[1]}:00`}
+                            leftLabel={rtStart12hr}
+                            rightLabel={rtEnd12hr}
                         />
                     </div>
                 </div>

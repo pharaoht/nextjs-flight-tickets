@@ -18,6 +18,7 @@ interface ticketProps {
     countryTo?:string;
     durationDepart?:string;
     durationReturn?:string;
+    totalDuration:string;
     price:string;
     departureFlights: string;
     returnFlights:string;
@@ -27,7 +28,13 @@ interface ticketProps {
     setSelectedFlights: (...args: any) => void;
 }
 
-const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlights, returnFlights, departFlightDays, returnFlightDays, returnDepartDate, returnArriveDate, toggleDialog, setSelectedFlights}: ticketProps) => {
+const Ticket = (
+    { 
+        cityFrom, cityTo, price, arriveDate, totalDuration, departDate, departureFlights, returnFlights, departFlightDays, 
+        returnFlightDays, returnDepartDate, returnArriveDate, link, stops, type, airlines, countryFrom, countryTo, durationDepart, durationReturn,
+        toggleDialog, setSelectedFlights
+    
+    }: ticketProps ) => {
 
     const isGreenOrRed = ( departOrReturn: string ): string => {
         
@@ -45,17 +52,26 @@ const Ticket = ({ cityFrom, cityTo, price, arriveDate, departDate, departureFlig
     const handleButtonClick = () => {
 
         const itemData = {
-            cityFrom, 
-            cityTo, 
-            price, 
-            arriveDate, 
-            departDate, 
-            departureFlights, 
-            returnFlights, 
-            departFlightDays, 
-            returnFlightDays, 
-            returnDepartDate, 
-            returnArriveDate, 
+            cityFrom,
+            cityTo,
+            departDate,
+            arriveDate,
+            returnDepartDate,
+            returnArriveDate,
+            link,
+            stops,
+            type,
+            airlines,
+            countryFrom,
+            countryTo,
+            durationDepart,
+            durationReturn,
+            totalDuration,
+            price,
+            departureFlights,
+            returnFlights,
+            departFlightDays,
+            returnFlightDays,
         }
     
         setSelectedFlights(itemData);
