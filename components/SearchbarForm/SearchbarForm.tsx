@@ -221,7 +221,7 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
                         handleChange={handleFormStateChange}
                         inputValue={formState[CURRENCY]}
                     />
-                    <Button variant="contained" endIcon={<SearchIcon />} onClick={handleSubmit}>
+                    <Button id='btn-find' variant="contained" endIcon={<SearchIcon />} onClick={handleSubmit}>
                         Find
                     </Button>
                 </div>

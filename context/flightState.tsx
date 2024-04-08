@@ -7,6 +7,8 @@ interface FlightConextType {
     setData?: (...args: any) => void;
     selectedFlight: {};
     handleSelectFlights?: (...args: any) => void;
+    setSideBarChange?: (...args: any) => void;
+    sideBarChange?: boolean;
 }
 
 const FlightContext = React.createContext<FlightConextType | null>(null);
@@ -20,6 +22,8 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
     const [ flightData, setFlightData ] = useState<any[]>([]);
 
     const [ selectedFlight, setSelectedFlight ] = useState<{}>({});
+
+    const [ sideBarChange, setSideBarChange ] = useState(false);
 
     const setData = ( flightData: any) => {
         const formattedData = formatFlightData(flightData)
@@ -37,6 +41,8 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
                 setData,
                 selectedFlight,
                 handleSelectFlights,
+                sideBarChange, 
+                setSideBarChange 
             }}
         >
             { children}

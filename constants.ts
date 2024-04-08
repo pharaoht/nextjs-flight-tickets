@@ -12,8 +12,15 @@ export const INFANTS = 'infants';
 export const PRICEFROM = 'priceFrom';
 export const PRICETO = 'priceTo';
 export const DIRECTION = 'direction';
-export const CURRENCY = 'currency'
-
+export const CURRENCY = 'currency';
+export const DEPARTOUTBOUNDTIMEFROM = 'dObTimeFrom';
+export const DEPARTOUTBOUNDTIMETO = 'dObTimeTo';
+export const DEPARTARRIVEFROM = 'dArrTimeFrom';
+export const DEPARTARRIVETO = 'dArrTimeTo';
+export const RETURNOUTBOUNDTIMEFROM = 'rObTimeFrom';
+export const RETURNOUTBOUNDTIMETO = 'rObTimeTo';
+export const RETURNARRIVEFROM = 'rArrTimeFrom';
+export const RETURNARRIVETO = 'rArrTimeTo';
 
 //page consts
 export const DESTINATIONS = 'destinations';

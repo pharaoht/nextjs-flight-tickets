@@ -7,17 +7,11 @@ import SearchForm from '../SearchbarForm/SearchbarForm';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Button from '@mui/material/Button/Button';
+import React from 'react';
 
-interface SearchAdvanceProps {
-    getFlights: (...args:any) => void;
-}
-
-
-const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
+const Searchbar = () => {
 
     const [isExpanded, setIsExpanded] = useState(false);
-
-    const [init, setInit] = useState(true);
 
     const { getUrlParamsValue, setUrlParams } = useURLParams();
 
@@ -70,17 +64,6 @@ const Searchbar = ({ getFlights }: SearchAdvanceProps) => {
 
         return undefined;
     }
-
-    useEffect(()=>{
-
-        if(init){
-            setInit(false)
-            return
-        }
-     
-        getFlights()
-
-    },[departureDate, returnDate])
 
     return (
         <div className={styles.headerSection} >

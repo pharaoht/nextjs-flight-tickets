@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './timeSlider.module.css';
 import Stack from '@mui/material/Stack/Stack';
 import RangeSlider from '../RangeSlider/RangeSlider';
@@ -13,15 +13,21 @@ const MINDISTANCE = 2;
 
 interface TimeSliderProps {
     title: string;
+    setParamFuncOb: (...args: any) => void;
+    obFromParam: string;
+    obToParam: string;
+    arrFromParam:string;
+    arrToParam:string;
+
 }
 
-const TimeSlider = ({ title }: TimeSliderProps) => {
+const TimeSlider = ({ title, setParamFuncOb, obFromParam, obToParam, arrFromParam, arrToParam }: TimeSliderProps) => {
 
     const [ isHidden, setIsHidden ] = useState(true);
 
-    const [ obSliderValue, setObSliderValue ] = useState<number[]>([0, 23]);
+    const [ obSliderValue, setObSliderValue ] = useState<number[]>([0, 24]);
 
-    const [ returnSliderValue, setReturnSliderValue ] = useState<number[]>([0, 23]);
+    const [ returnSliderValue, setReturnSliderValue ] = useState<number[]>([0, 24]);
 
     const { toAmPmformat } = useDate();
 
@@ -54,8 +60,26 @@ const TimeSlider = ({ title }: TimeSliderProps) => {
         else {
             setReturnSliderValue([returnSliderValue[0], Math.max(newValue[1], returnSliderValue[0] + MINDISTANCE)]);
         }
-    }
+    };
 
+
+    useEffect(() => {
+
+        const timer = setTimeout(() => {
+
+            setParamFuncOb((prevState: any) => ({
+                ...prevState,
+                [obFromParam]: `${obSliderValue[0]}:00`,
+                [obToParam]: `${obSliderValue[1]}:00`,
+                [arrFromParam]: `${returnSliderValue[0]}:00`,
+                [arrToParam]: `${returnSliderValue[1]}:00`,
+            }));
+
+        }, 500);
+
+        return () => clearTimeout(timer)
+    
+    }, [ obSliderValue, returnSliderValue ])
 
     return (
         <div className={styles.parent}>
