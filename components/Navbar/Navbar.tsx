@@ -23,10 +23,16 @@ const Navbar = () => {
         { link: `/${NEWSLETTER}`, title: 'Newsletter' },
     ];
 
+    const handleOnClick = () => {
+        if(isActive){
+            setIsActive(false)
+        }
+    }
+
     const renderLinks = () => (
 
         links.map((itm, idx) => (
-            <li className={styles.linkListItem} key={itm.title}>
+            <li className={styles.linkListItem} key={itm.title} onClick={handleOnClick}>
                 <Link className={`${styles.linkTag} ${activeLinkTabCssClass(itm.link)}`} href={itm.link} >
                     {itm.title}
                 </Link>
