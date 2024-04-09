@@ -65,6 +65,9 @@
     font-size: 1.25em;
 }
 
+.toggle{
+    display: none;
+}
 
 
 @media (max-width: 991px) {
@@ -86,13 +89,25 @@
         margin-bottom: 60px;
     }
 
-    /* .active {
-        z-index: 10;
+    .toggle {
+        z-index: 999;
+        margin: 10px;
+        position: fixed;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        justify-content: center;
+        align-items: center;
+        display: block;
+    }
+
+    .active {
+        z-index: 900;
         height:100vh;
         bottom: 0;
         width: 100%;
         background-color: white;
-    } */
+    }
 
     .navigation{
         gap: 60px;
@@ -101,20 +116,8 @@
     }
 
 
-    .toggle {
-        z-index: 999;
-        position: absolute;
-        top: 0;
-        right: 0;
-        width: 60px;
-        height: 60px;
-        background: #00a698;
-        cursor: pointer;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
 
+/* 
     .toggle::before {
         content: "";
         position: absolute;
@@ -133,7 +136,7 @@
         background-color: #fff;
         transform: translateY(5px);
         transition: 0.2s;
-    }
+    } */
 
     .toggle.activate::before {
         transform: translateY(0px) rotate(45deg);

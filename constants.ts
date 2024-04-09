@@ -21,6 +21,7 @@ export const RETURNOUTBOUNDTIMEFROM = 'rObTimeFrom';
 export const RETURNOUTBOUNDTIMETO = 'rObTimeTo';
 export const RETURNARRIVEFROM = 'rArrTimeFrom';
 export const RETURNARRIVETO = 'rArrTimeTo';
+export const TOTALDURATION = 'duration';
 
 //page consts
 export const DESTINATIONS = 'destinations';

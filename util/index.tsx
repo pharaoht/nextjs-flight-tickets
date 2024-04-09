@@ -21,9 +21,7 @@ export const calculateDays = (departureTime: string, arrivalTime: string ): stri
 
 export const secondsToHours = (seconds: number): string => {
 
-    const durationInHours = String(moment.duration(seconds, 'seconds').hours());
-
-    return durationInHours;
+    return String(Math.ceil(seconds / 3600)); 
 
 }
 
@@ -170,16 +168,24 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
         infants: 'infants',
         cabin: 'selected_cabins',
         currency: 'curr',
-        
+        dObTimeFrom:'dtime_from',
+        dObTimeTo:'dtime_to',
+        dArrTimeFrom:'atime_from',
+        dArrTimeTo:'atime_to',
+        rObTimeFrom:'ret_dtime_from',
+        rObTimeTo:'ret_dtime_to',
+        rArrTimeFrom:'ret_atime_from',
+        rArrTimeTo:'ret_atime_to',
+        duration: 'max_fly_duration'
     }
-
-    console.log(params)
 
     let isOneWay = false;
 
-    const baseStr = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&locale=en';
-    const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
+    const baseStr = 'vehicle_type=aircraft&locale=en';
+    // const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
+    // dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&
     const lstStr = '&limit=50';
+
 
     let qStr = '';
     params.map((itm, idx) => {
@@ -204,5 +210,41 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
         }
     });
 
-    return qStr + baseStr + `${isOneWay ? lstStr : retStr + lstStr}`
+    return qStr + baseStr + lstStr
+}
+
+const builder = ( params: { key:string, value:string }[] ) => {
+
+    const queryParams: Record<string, string | string[]> = {
+        fromLocation:'fly_from',
+        toLocation:'fly_to',
+        departure:['dateFrom', 'dateTo'],
+        return: ['return_to', 'return_from'],
+        adults: 'adults',
+        children: 'children',
+        infants: 'infants',
+        cabin: 'selected_cabins',
+        currency: 'curr',
+        dObTimeFrom:'dtime_from',
+        dObTimeTo:'dtime_to',
+        dArrTimeFrom:'atime_from',
+        dArrTimeTo:'atime_to',
+        rObTimeFrom:'ret_dtime_from',
+        rObTimeTo:'ret_dtime_to',
+        rArrTimeFrom:'ret_atime_from',
+        rArrTimeTo:'ret_atime_to',
+        duration: 'max_fly_duration'
+    }
+
+    const nullParams = [];
+
+    for(const key in params){
+
+        const objectParam = params[key];
+
+        if(objectParam.value === ''){
+            nullParams.push(objectParam.key)
+        }
+    }
+
 }

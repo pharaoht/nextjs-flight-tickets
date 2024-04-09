@@ -117,10 +117,10 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
                 sx={{'& .MuiTextField-root': {width: '20vw' },}}
             >
                 <div>
-                   <DestinationButtonGroup
+                    <DestinationButtonGroup
                         selectedOption={selectedOption}
                         handleParamChange={handleParamChange}
-                   />
+                    />
                 </div>
             </Box>
             <Box

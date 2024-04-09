@@ -1,18 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import styles from './duration.module.css';
 import Stack from '@mui/material/Stack/Stack';
 import RangeSlider from '../RangeSlider/RangeSlider';
 import ScheduleIcon from '@mui/icons-material/Schedule';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
+import FlightContext from '@/context/flightState';
 
 const MINDISTANCE = 1;
 
 const Duration = () => {
 
+    const flightContext = useContext(FlightContext);
+
+    const flightData = flightContext?.flightData || [];
+
     const [ isHidden, setIsHidden ] = useState(true);
 
-    const [ durationSlider, setDurationSlider ] = useState<number[]>([0,12])
+    const [ min, setMin ] = useState(0);
+    const [ max, setMax ] = useState(0);
+
+    const [ durationSlider, setDurationSlider ] = useState<number[]>([0,0]);
 
     const toggleHandler = () => setIsHidden( prevState => !prevState);
 
@@ -26,6 +34,29 @@ const Duration = () => {
             setDurationSlider([durationSlider[0], Math.max(newValue[1], durationSlider[0] + MINDISTANCE)]);
         }
     };
+
+    const getDurations = ( ) => {
+
+        let lowest = 0;
+        let highest = 0;
+
+        for(const item of flightData){
+
+            if(lowest == 0) lowest = Number(item.totalDuration);
+            if(highest == 0) highest = Number(item.totalDuration);
+            if(item.totalDuration < lowest) lowest = Number(item.totalDuration);
+            if(item.totalDuration > highest) highest = Number(item.totalDuration);
+            
+        }
+        setMin(lowest);
+        setMax(highest);
+        setDurationSlider([Number(lowest), Number(highest)])
+
+    }
+
+    useEffect(() => {
+        getDurations()
+    }, [flightData])
 
     return (
         <div className={styles.parent}>
@@ -55,6 +86,8 @@ const Duration = () => {
                 <div className={styles.sliderHolder}>
                     <RangeSlider 
                         value={durationSlider}
+                        min={min}
+                        max={max}
                         handleChange={handleSliderChange}
                         leftLabel={`${durationSlider[0]}hrs`}
                         rightLabel={`${durationSlider[1]}hrs`}

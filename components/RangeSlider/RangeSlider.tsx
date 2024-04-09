@@ -7,17 +7,19 @@ interface RangeSliderProps {
     handleChange: (event: Event, newValue: number | number[], activeThumb: number) => void;
     leftLabel: string;
     rightLabel:string;
+    min?:number;
+    max?:number;
 }
 
-const RangeSlider = ({ value, handleChange, leftLabel, rightLabel}: RangeSliderProps) => (
+const RangeSlider = ({ value, handleChange, leftLabel, rightLabel, min, max}: RangeSliderProps) => (
     <Box sx={{ width: '100%' }}>
         <Stack spacing={2} direction='row' alignItems='center'>
             <span style={{ whiteSpace: 'nowrap' }}>{leftLabel}</span>
             <Slider
                 value={value}
                 onChange={handleChange}
-                min={0}
-                max={23}
+                min={min ?? 0}
+                max={max ?? 24}
                 disableSwap
             />
             <span style={{ whiteSpace: 'nowrap' }}>{rightLabel}</span>
