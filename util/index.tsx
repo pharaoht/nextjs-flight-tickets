@@ -168,22 +168,22 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
         infants: 'infants',
         cabin: 'selected_cabins',
         currency: 'curr',
-        dObTimeFrom:'dtime_from',
-        dObTimeTo:'dtime_to',
-        dArrTimeFrom:'atime_from',
-        dArrTimeTo:'atime_to',
-        rObTimeFrom:'ret_dtime_from',
-        rObTimeTo:'ret_dtime_to',
-        rArrTimeFrom:'ret_atime_from',
-        rArrTimeTo:'ret_atime_to',
-        duration: 'max_fly_duration'
+        // dObTimeFrom:'dtime_from',
+        // dObTimeTo:'dtime_to',
+        // dArrTimeFrom:'atime_from',
+        // dArrTimeTo:'atime_to',
+        // rObTimeFrom:'ret_dtime_from',
+        // rObTimeTo:'ret_dtime_to',
+        // rArrTimeFrom:'ret_atime_from',
+        // rArrTimeTo:'ret_atime_to',
+        // duration: 'max_fly_duration'
     }
 
     let isOneWay = false;
 
-    const baseStr = 'vehicle_type=aircraft&locale=en';
-    // const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
-    // dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&
+    const baseStr = 'vehicle_type=aircraft&dtime_from=0:00&dtime_to=24:00&atime_from=0:00&atime_to=24:00&locale=en';
+    const retStr = '&ret_dtime_from=0:00&ret_dtime_to=24:00&ret_atime_from=0:00&ret_atime_to=24:00';
+
     const lstStr = '&limit=50';
 
 
@@ -210,7 +210,9 @@ export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) 
         }
     });
 
-    return qStr + baseStr + lstStr
+    const onwWay = isOneWay === false ?  retStr + lstStr : lstStr
+
+    return qStr + baseStr + onwWay
 }
 
 const builder = ( params: { key:string, value:string }[] ) => {
