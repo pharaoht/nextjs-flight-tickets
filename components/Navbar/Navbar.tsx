@@ -1,5 +1,5 @@
 'use client'
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import styles from './navbar.module.css'
 import { usePathname } from 'next/navigation';
@@ -11,6 +11,8 @@ import CloseIcon from '@mui/icons-material/Close';
 const Navbar = () => {
 
     const [ isActive, setIsActive ] = useState(false);
+
+    const [ showButton, setShowButton ] = useState(true);
 
     const currentPath = usePathname();
 
@@ -40,20 +42,42 @@ const Navbar = () => {
         ))
     );
 
+    useEffect(() => {
+        const handleScroll = () => {
+            const scrollPosition = window.scrollY;
+            setShowButton(scrollPosition === 0);
+        };
+
+        window.addEventListener('scroll', handleScroll);
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+        };
+    }, []);
+
+    useEffect(() => {
+
+        if (isActive) document.body.style.overflow = 'hidden';
+        else document.body.style.overflow = 'auto';
+        
+    }, [isActive]);
+
 
     return (
         <nav className={`${styles.container} ${ isActive ? styles.active: ''}`}>
             <Link href='/' className={styles.logo}>Travel</Link>
             <div id='toggle' className={`${styles.toggle}`}>
-                <Button 
-                    sx={{background:'#00a698'}}
-                    color='primary'
-                    variant="contained"
-                    size='small'
-                    onClick={() => setIsActive(prev => !prev)}
-                >
-                    { !isActive ? <MenuIcon/> : <CloseIcon/>}
-                </Button>
+                { showButton &&
+                    <Button 
+                        sx={{background:'#00a698'}}
+                        color='primary'
+                        variant="contained"
+                        size='small'
+                        onClick={() => setIsActive(prev => !prev)}
+                    >
+                        { !isActive ? <MenuIcon/> : <CloseIcon/>}
+                    </Button>
+                }
             </div>
             <div className={`${styles.group} `} id='navbar'>
                 <ul className={styles.navigation}>
