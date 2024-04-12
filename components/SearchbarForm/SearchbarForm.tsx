@@ -72,19 +72,39 @@ const SearchForm = ({ setExpanded }:searchFormProps) => {
         }));
     };
 
-    const validateForm = () => {
-        let isError = false;
+    const validateForm = (): boolean => {
+
+        let isFormValid = true;
+    
         for(const key in formState){
-            //add logic to validate
-           
+
+            if(formState.hasOwnProperty(key)){
+
+                const value = formState[key as keyof typeof formState];
+
+                if(selectedOption === ONEWAY && key !== RETURN && value === ''){
+                    return isFormValid = false;
+                }
+                else if (selectedOption === RETURN && value === ''){
+                    return isFormValid = false;
+                }
+            }
         }
+
+        return isFormValid;
     }
 
     const handleSubmit = async (event: MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        validateForm()
-        setMultipleUrlParams(formState);
-        setExpanded(false);
+        const isFormValid = validateForm();
+
+        if(isFormValid){
+            setMultipleUrlParams(formState);
+            setExpanded(false);
+            return
+        }
+
+        alert('Please fill out Location and Date Fields')
     }
 
     useEffect(() => {

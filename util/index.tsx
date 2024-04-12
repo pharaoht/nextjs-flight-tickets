@@ -112,7 +112,7 @@ export const formatFlightData = ( flightData: any ) => {
             cityToCode: itm.cityTo,
             airportFromCode: itm.flyFrom,
             airportToCode: itm.flyTo,
-            farePrice: `$${itm.price} USD`,
+            farePrice: `$${Math.round(itm.price)} USD`,
             countryFromName: itm.countryFrom.name,
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),
