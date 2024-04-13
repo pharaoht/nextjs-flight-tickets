@@ -1,7 +1,7 @@
 import { CURRENCY } from "@/constants";
 import useURLParams from "@/hooks/useUrlParams";
 import { formatFlightData, } from "@/util";
-import React, { useState, ReactNode,  } from "react";
+import React, { useState, ReactNode, Suspense,  } from "react";
 
 interface FlightConextType {
     flightData: any[];
@@ -40,18 +40,20 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
     }
 
     return (
-        <FlightContext.Provider 
-            value={{ 
-                flightData, 
-                setData,
-                selectedFlight,
-                handleSelectFlights,
-                sideBarChange, 
-                setSideBarChange 
-            }}
-        >
-            { children}
-        </FlightContext.Provider>
+        <Suspense fallback={<>loading</>}>
+            <FlightContext.Provider 
+                value={{ 
+                    flightData, 
+                    setData,
+                    selectedFlight,
+                    handleSelectFlights,
+                    sideBarChange, 
+                    setSideBarChange 
+                }}
+            >
+                { children}
+            </FlightContext.Provider>
+        </Suspense>
     )
 };
 
