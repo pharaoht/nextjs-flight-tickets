@@ -26,7 +26,9 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
 
     const [ sideBarChange, setSideBarChange ] = useState(false);
 
-    const currency = ''
+    const { getUrlParamsValue } = useURLParams()
+
+    const currency = getUrlParamsValue(CURRENCY);
 
     const setData = ( flightData: any) => {
         const formattedData = formatFlightData(flightData, currency || 'USD')

@@ -75,7 +75,9 @@ const Container = () => {
                         <Sidebar/>
                     </div>
                     <div className={styles.ticketArea}>
-                        <Main isLoading={isLoading} error={error}/>
+                        <Suspense fallback={<>Loading</>}>
+                            <Main isLoading={isLoading} error={error}/>
+                        </Suspense>
                     </div>
                 </div>
             </div>
