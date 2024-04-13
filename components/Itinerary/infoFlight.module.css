@@ -1,0 +1,23 @@
+.headerContainer{
+    display: flex;
+}
+
+.listContainer{
+    display: flex;
+    list-style: none;
+    padding: 0;
+}
+
+.defaultListItem{
+    border-bottom: 2px solid #00a698;
+}
+
+.activeListItem{
+    border-top: 2px solid #00a698;
+    border-left: 2px solid #00a698;
+    border-right: 2px solid #00a698;
+}
+
+.listItem{
+    padding: 5px;
+}

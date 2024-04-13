@@ -17,7 +17,7 @@ import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
 const Container = () => {
 
-    const { isLoading, sendRequest } = useHttp();
+    const { isLoading, sendRequest, error } = useHttp();
 
     const { getAllUrlParams, getUrlParamsValue } = useURLParams();
 
@@ -69,12 +69,13 @@ const Container = () => {
                 <div className={styles.mainFlightInfo}>
                     <div className={styles.sidebarComponent}>
                         <div className={styles.sidebarTotal}>
-                            { renderFlightsAvailable() }
+                            { !error && renderFlightsAvailable() }
+                            { error && 'Error occured'}
                         </div>
                         <Sidebar/>
                     </div>
                     <div className={styles.ticketArea}>
-                        <Main isLoading={isLoading}/>
+                        <Main isLoading={isLoading} error={error}/>
                     </div>
                 </div>
             </div>

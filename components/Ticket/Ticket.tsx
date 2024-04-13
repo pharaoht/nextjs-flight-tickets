@@ -97,7 +97,11 @@ const Ticket = (
                     <span>{cityTo}</span>
                     <span>
                         <b className={styles.tinyDate}>{arriveDate}</b>
-                        <span className={styles.tinyText}>{Number(departFlightDays) > 0 && `+${departFlightDays}`}</span>
+                        { Number(departFlightDays) > 0 &&
+                            <span className={styles.tinyText}>
+                                {Number(departFlightDays) > 0 && `+${departFlightDays}`}
+                            </span>
+                        }
                     </span>
                 </div>
                 
@@ -120,7 +124,12 @@ const Ticket = (
                         <span>{cityFrom}</span>
                         <span>
                             <b className={styles.tinyDate}>{returnArriveDate}</b>
-                            <span className={styles.tinyText}>{Number(returnFlightDays) > 0 && `+${returnFlightDays}`}</span>
+                            
+                            { Number(returnFlightDays) > 0 &&
+                                <span className={styles.tinyText}>
+                                    {Number(returnFlightDays) > 0 && `+${returnFlightDays}`}
+                                </span>
+                            }
                         </span>
                     </div>
                     

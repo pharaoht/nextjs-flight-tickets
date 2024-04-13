@@ -8,9 +8,10 @@ import Itinerary from '../Itinerary/Itinerary';
 
 interface PropsForMain {
     isLoading: boolean;
+    error: string;
 }
 
-const Main = ({ isLoading }: PropsForMain) => {
+const Main = ({ isLoading, error }: PropsForMain) => {
 
     const [isDialogOpen, setIsDialogOpen ] = useState<boolean>(false);
 
@@ -31,6 +32,10 @@ const Main = ({ isLoading }: PropsForMain) => {
     const noFlightsPrompt = () => (
         <div>No flights available</div>
     );
+
+    const errorPrompt = () => (
+        <div>Error occured while getting flights</div>
+    )
 
     const loadingPrompt = () => (
         <IconButton aria-label="delete">
@@ -73,9 +78,10 @@ const Main = ({ isLoading }: PropsForMain) => {
     
     return(
         <div className={styles.container}>
-            { isLoading && loadingPrompt() }
+            { isLoading && !error && loadingPrompt() }
             { !isLoading && flightData.length === 0 && noFlightsPrompt() }
             { !isLoading && flightData.length > 0 && renderFlights() }
+            { error && errorPrompt() }
             <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen}>
                 <Itinerary flightData={selectedFlight} />
             </Dialog>
