@@ -17,7 +17,7 @@ const AirportLocationField = ({ label, inputValue, onInputChange, options,  id, 
     <Autocomplete
         filterOptions={(x) => x }
         inputValue={inputValue}
-        onInputChange={(event, newInputValue) => onInputChange(paramType, newInputValue)}
+        onInputChange={(event, newInputValue) => onInputChange(paramType, newInputValue, event)}
         loading={loading}
         id={id}
         getOptionLabel={(option) => option.name} 

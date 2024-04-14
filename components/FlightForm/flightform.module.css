@@ -3,7 +3,8 @@
     position: absolute;
     bottom: 0;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
+    gap: 15px;
     align-items: center;
     background: #fff;
     padding: 30px 50px;
@@ -11,6 +12,36 @@
     transform: translateY(50%);
     box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1);
     animation: 1s slidefades 0.1s forwards;
+}
+
+.whiteBackGround {
+    background-color: #fff;
+    width: 175px;
+}
+
+.inputContainer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.destinationBtn{
+    display: flex;
+    flex-direction: column;
+    
+}
+
+@media (max-width: 991px) {
+    .searchBox {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .destinationBtn{
+        display: flex;
+        flex-direction: row;
+        
+    }
 }
 
 @keyframes slidefades {

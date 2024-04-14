@@ -1,74 +1,63 @@
 'use client'
+import moment from 'moment';
+import useDate from '@/hooks/useDate';
 import useHttp from '@/hooks/useHttp';
 import { useRouter } from 'next/navigation';
-import React, { FormEvent, useEffect, useState } from 'react';
-import AirportLocationsList from '../AirportLocationList';
-import CustomFormInput from '../Input';
 import styles from './flightform.module.css';
-import { requestApiObject} from '@/util';
-import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN} from '@/constants';
+import { AirportLocationType } from '@/types';
 import useURLParams from '@/hooks/useUrlParams';
-import useDate from '@/hooks/useDate';
+import Button from '@mui/material/Button/Button';
+import SearchIcon from '@mui/icons-material/Search';
+import { formLocationData, requestApiObject} from '@/util';
+import React, { FormEvent, useEffect, useState } from 'react';
+import AirportLocationField from '../AirportLocation/AirportLocation';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker/DatePicker';
+import { FROMLOCATION, TOLOCATION, DEPARTURE, RETURN, DIRECTION, ONEWAY} from '@/constants';
+import { AdapterMoment } from '@mui/x-date-pickers/AdapterMoment/AdapterMoment';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider/LocalizationProvider';
+import DestinationButtonGroup from '../DestinationBtn/DestinationBtn';
+import ThemeProvider from '@mui/material/styles/ThemeProvider';
+import { theme } from '@/theme/theme';
+
+
+let init = true;
 
 const FlightForm = () => {
     
     const router = useRouter();
 
+    const { getFollowingDate } = useDate();
+
+    const { isLoading, sendRequest } = useHttp();
+
     const { setUrlParams, getUrlParamsValue } = useURLParams();
 
     const [formState, setFormState] = useState<{ [key: string]: string }>({
-        [FROMLOCATION]: getUrlParamsValue(FROMLOCATION),
-        [TOLOCATION]: getUrlParamsValue(TOLOCATION),
-        [DEPARTURE]: getUrlParamsValue(DEPARTURE),
-        [RETURN]: getUrlParamsValue(RETURN),
+        [FROMLOCATION]: '',
+        [TOLOCATION]: '',
+        [DEPARTURE]: '',
+        [RETURN]: '',
+        [DIRECTION]:''
     });
-    
-    const [fromAirportLocations, setFromAirportLocations] = useState([]);
 
-    const [toAirportLocations, setToAirportLocations] = useState([]);
+    const [ airportLocations, setAirportLocations] = useState<AirportLocationType[]>([]);    
 
-    const { isLoading: loadingFromLocations, sendRequest: getFromLocations } = useHttp();
+    const getAirports = async ( inputValue: string) => {
 
-    const { isLoading: loadingToLocations, sendRequest: getToLocations } = useHttp();
-
-    const { getTodayDate, getFollowingDate} = useDate()
-
-
-    const getFromAirports = async ( inputValue: string) => {
-
-        if(inputValue === '') return setFromAirportLocations([]);
+        if(inputValue === '') return setAirportLocations([]);
 
         const requestConfig = requestApiObject(inputValue);
 
-        await getFromLocations({ requestConfig, callback: (data: { locations: []}) => {
-            setFromAirportLocations(data.locations)
+        await sendRequest({ requestConfig, callback: (data: { locations: []}) => {
+            const formatData = formLocationData(data)
+            setAirportLocations(formatData)
         }})
 
     };
 
-    const getToApirports = async ( inputValue: string) => {
+    const validateForm = () =>{
 
-        if(inputValue === '') return setToAirportLocations([]);
-
-        const requestConfig = requestApiObject(inputValue);
-
-        await getToLocations({ requestConfig, callback: (data: { locations: []}) => {
-            setToAirportLocations(data.locations);
-        }});
-
-    };
-
-    const populateInput = (value: string, formInput: string) => {
-
-        setFormState(prevState => ({
-            ...prevState,
-            [formInput]: value
-        }));
-
-        setFromAirportLocations([])
-        setToAirportLocations([])
-
-    };
+    }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
@@ -77,98 +66,119 @@ const FlightForm = () => {
         router.replace(`/tickets?${params.toString()}`)
     }
 
-    useEffect(() => {
-        if(formState.toLocation != ''){
-            setUrlParams(TOLOCATION, formState.toLocation);
+
+    const loadParams = ( ) => Object.entries(formState).map(([key, value]) => {
+        
+        const paramValue = getUrlParamsValue(key);
+
+        if(paramValue){
+            setFormState(prev => ({
+                ...prev,
+                [key]: paramValue
+            }));
         }
-        getToApirports(formState.toLocation);
-    }, [ formState.toLocation ])
+    })
+
+    const handleOnChange = ( key: string, value: string, event:any) => {
+
+        if(value == ''){
+
+            if(event && event.nativeEvent.inputType === 'deleteContentBackward'){
+    
+                setFormState(prev => ({
+                    ...prev,
+                    [key]: value
+                }));
+
+                setUrlParams(key, value)
+
+                return;
+            }
+
+            return;
+        }
+
+        setFormState(prev => ({
+            ...prev,
+            [key]: value
+        }));
+
+        setUrlParams(key, value)
+    
+    }
 
     useEffect(() => {
-        if(formState.departure != ''){
-            setUrlParams(DEPARTURE, formState.departure);
-        }
-    }, [ formState.departure])
+
+        const timer = setTimeout(()=>{
+            getAirports(formState[FROMLOCATION])
+        }, 500)
+
+        return () => clearTimeout(timer)
+    }, [formState[FROMLOCATION]]);
 
     useEffect(() => {
-        if(formState.return != ''){
-            setUrlParams(RETURN, formState.return);
-        }
-    }, [ formState.return ])
 
-    useEffect(() => {
-        getFromAirports(formState.fromLocation);
-  
-        if(formState.fromLocation != ''){
-            setUrlParams(FROMLOCATION, formState.fromLocation);
-        }
+        const timer = setTimeout(()=>{
+            getAirports(formState[TOLOCATION])
+        }, 500)
 
-    }, [ formState.fromLocation ])
+        return () => clearTimeout(timer)
+    }, [formState[TOLOCATION]]);
 
+    useEffect(() => { loadParams() },[])
 
     return (
-        <form className={styles.searchBox} onSubmit={(e) => onSubmit(e)}>
-            <div>
-                { (fromAirportLocations.length > 0 || loadingFromLocations) && 
-                  <AirportLocationsList 
-                    locationData={fromAirportLocations} 
-                    onClickFunc={populateInput}
-                    loadingState={loadingFromLocations}
-                    formInput={FROMLOCATION}
-                  />
-                }
-                <CustomFormInput 
-                    title='From' 
-                    type='text' 
-                    name={FROMLOCATION}
-                    placeHolder='JFK, LAX, more...'
-                    formValue={formState.fromLocation}
-                    setFormValue={setFormState}
+        <ThemeProvider theme={theme}>
+            <form className={styles.searchBox} onSubmit={(e) => onSubmit(e)}>
+                <DestinationButtonGroup
+                    selectedOption={formState[DIRECTION]}
+                    handleParamChange={handleOnChange}
+                    customCss={styles.destinationBtn}
                 />
-            </div>
-            <div>
-                { (toAirportLocations.length > 0 || loadingToLocations) && 
-                  <AirportLocationsList 
-                    locationData={toAirportLocations} 
-                    onClickFunc={populateInput}
-                    loadingState={loadingToLocations}
-                    formInput={TOLOCATION}
-                  />
-                }
-                <CustomFormInput 
-                    title='To'
-                    type='text'
-                    name={TOLOCATION}
-                    placeHolder='JFK, LAX, more...'
-                    formValue={formState.toLocation}
-                    setFormValue={setFormState}
+                <AirportLocationField 
+                    inputValue={formState[FROMLOCATION]}
+                    onInputChange={handleOnChange}
+                    loading={isLoading}
+                    id={'fromLocationHome'}
+                    options={airportLocations}
+                    label='From'
+                    className={styles.whiteBackGround}
+                    paramType={FROMLOCATION}   
                 />
-            </div>
-            <div>
-                <CustomFormInput 
-                    title='Departure' 
-                    type='date' 
-                    name={DEPARTURE} 
-                    placeHolder='When would you like to leave?' 
-                    minDate={getTodayDate()} 
-                    setFormValue={setFormState}
-                    formValue={formState.departure}
+                <AirportLocationField
+                    inputValue={formState[TOLOCATION]}
+                    onInputChange={handleOnChange}
+                    loading={isLoading}
+                    id={'toLocationHome'}
+                    options={airportLocations}
+                    label='Destination'
+                    className={styles.whiteBackGround}
+                    paramType={TOLOCATION}
                 />
-            </div>
-            <div>
-                <CustomFormInput 
-                    title='Return' 
-                    type='date' 
-                    name={RETURN}
-                    placeHolder='When would you like to return?'
-                    minDate={getFollowingDate(formState.departure)}
-                    setFormValue={setFormState}
-                    isDisabled={!formState.departure && true }
-                    formValue={formState.return}
-                />            
-            </div>
-              <CustomFormInput title='&nbsp;' type='Submit' name='submit_btn' btnValue='Search' setFormValue={() => null}/>
-        </form>
+                <LocalizationProvider dateAdapter={AdapterMoment}>
+                    <DatePicker 
+                        label="Departure" 
+                        className={styles.whiteBackGround}
+                        minDate={moment()}
+                        format="YYYY-MM-DD"
+                        value={formState[DEPARTURE] ? moment(formState[DEPARTURE]) : null}
+                        onChange={(newValue) => handleOnChange(DEPARTURE, String(moment(newValue).format('YYYY-MM-DD')), '')}
+                    />
+                    <DatePicker 
+                        label="Return" 
+                        minDate={moment(getFollowingDate(formState[DEPARTURE]))}
+                        className={styles.whiteBackGround}
+                        disabled={formState[DIRECTION] === ONEWAY ? true : false}
+                        format="YYYY-MM-DD"
+                        value={formState[RETURN] ? moment(formState[RETURN]) : null}
+                        onChange={(newValue) => handleOnChange(RETURN, String(moment(newValue).format('YYYY-MM-DD')), '')}
+                    />
+                </LocalizationProvider>
+                <Button type='submit' id='btn-find-Home' variant="contained" endIcon={<SearchIcon />} onClick={()=>{}}>
+                    Find
+                </Button>
+            </form>
+        </ThemeProvider>
     )
 };
 

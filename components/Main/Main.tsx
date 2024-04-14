@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react';
+import { Suspense, useContext, useState } from 'react';
 import styles from './main.module.css';
 import FlightContext from '@/context/flightState';
 import { CircularProgress, IconButton } from '@mui/material';
@@ -79,15 +79,17 @@ const Main = ({ isLoading, error, currency }: PropsForMain) => {
     );
     
     return(
-        <div className={styles.container}>
-            { isLoading && !error && loadingPrompt() }
-            { !isLoading && flightData.length === 0 && noFlightsPrompt() }
-            { !isLoading && flightData.length > 0 && renderFlights() }
-            { error && errorPrompt() }
-            <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen}>
-                <Itinerary flightData={selectedFlight} />
-            </Dialog>
-        </div>
+        <Suspense fallback={<>Loading</>}>
+            <div className={styles.container}>
+                { isLoading && !error && loadingPrompt() }
+                { !isLoading && flightData.length === 0 && noFlightsPrompt() }
+                { !isLoading && flightData.length > 0 && renderFlights() }
+                { error && errorPrompt() }
+                <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen}>
+                    <Itinerary flightData={selectedFlight} />
+                </Dialog>
+            </div>
+        </Suspense>
     )
 }
 
