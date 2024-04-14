@@ -2,6 +2,7 @@ import styles from './ticket.module.css';
 import { Button, } from '@mui/material';
 import { PRIMARY } from '@/theme/theme';
 import AddIcon from '@mui/icons-material/Add';
+import { matchCurrency } from '@/util';
 
 interface ticketProps {
     cityFrom?: string;
@@ -26,13 +27,14 @@ interface ticketProps {
     returnFlightDays:string;
     toggleDialog: () => void;
     setSelectedFlights: (...args: any) => void;
+    currency:string;
 }
 
 const Ticket = (
     { 
         cityFrom, cityTo, price, arriveDate, totalDuration, departDate, departureFlights, returnFlights, departFlightDays, 
         returnFlightDays, returnDepartDate, returnArriveDate, link, stops, type, airlines, countryFrom, countryTo, durationDepart, durationReturn,
-        toggleDialog, setSelectedFlights
+        toggleDialog, setSelectedFlights, currency
     
     }: ticketProps ) => {
 
@@ -76,6 +78,11 @@ const Ticket = (
     
         setSelectedFlights(itemData);
         toggleDialog();
+    }
+
+    const displayCurrency = (curr: string, price:string) => {
+        const curLabel = matchCurrency(curr)
+        return `${curLabel[0]}${price} ${curLabel[1]}`;
     }
 
     return (
@@ -137,7 +144,7 @@ const Ticket = (
             }
 
             <div className={styles.priceContainer}>
-                <span>{price}</span>
+                <span>{displayCurrency(currency, price)}</span>
                 <Button 
                     color={PRIMARY}
                     variant="contained"

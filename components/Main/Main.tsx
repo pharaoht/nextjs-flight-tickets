@@ -9,9 +9,10 @@ import Itinerary from '../Itinerary/Itinerary';
 interface PropsForMain {
     isLoading: boolean;
     error: string;
+    currency:string;
 }
 
-const Main = ({ isLoading, error }: PropsForMain) => {
+const Main = ({ isLoading, error, currency }: PropsForMain) => {
 
     const [isDialogOpen, setIsDialogOpen ] = useState<boolean>(false);
 
@@ -72,6 +73,7 @@ const Main = ({ isLoading, error }: PropsForMain) => {
                 returnFlightDays={itm.flightDaysReturn}
                 toggleDialog={toggleIsOpen}
                 setSelectedFlights={handleSelectFlight}
+                currency={currency}
            />
         ))
     );

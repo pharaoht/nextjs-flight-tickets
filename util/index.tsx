@@ -94,7 +94,7 @@ export const getReturnFlightTimes = (route: any[]) => {
 
 }
 
-const matchCurrency = (curr: string) => {
+export const matchCurrency = (curr: string) => {
 
     const currLabel = CURRENCIES.find(itm => itm.value.toLowerCase() === curr.toLowerCase())?.label;
 
@@ -103,11 +103,9 @@ const matchCurrency = (curr: string) => {
     return [sign, name]
 }
 
-export const formatFlightData = ( flightData: any, currency:string ) => {
+export const formatFlightData = ( flightData: any ) => {
 
     const data = flightData.data;
-
-    const currLabel = matchCurrency(currency);
 
     const formattedData = data.map((itm: any) => {
 
@@ -125,7 +123,7 @@ export const formatFlightData = ( flightData: any, currency:string ) => {
             cityToCode: itm.cityTo,
             airportFromCode: itm.flyFrom,
             airportToCode: itm.flyTo,
-            farePrice: `${currLabel[0]}${Math.round(itm.price)} ${currLabel[1]}`,
+            farePrice: `${Math.round(itm.price)}`,
             countryFromName: itm.countryFrom.name,
             countryToName: itm.countryTo.name,
             localArrival: formatDateStringStamp(itm.local_arrival),

@@ -9,7 +9,7 @@ import FlightContext from '@/context/flightState';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Searchbar from '@/components/Searchbar/Searchbar';
 import React, { useEffect, useContext, Suspense } from 'react';
-import { DEPARTARRIVEFROM, DEPARTARRIVETO, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DEPARTURE, RETURN } from '@/constants';
+import { CURRENCY, DEPARTARRIVEFROM, DEPARTARRIVETO, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DEPARTURE, RETURN } from '@/constants';
 import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
@@ -22,7 +22,7 @@ const Container = () => {
     const { getAllUrlParams, getUrlParamsValue } = useURLParams();
 
     const flightContext = useContext(FlightContext);
-
+    const curr = getUrlParamsValue(CURRENCY) || 'USD';
     const dObTimeFrom = getUrlParamsValue(DEPARTOUTBOUNDTIMEFROM);
     const dObTimeTo = getUrlParamsValue(DEPARTOUTBOUNDTIMETO);
     const arrTimeFrom = getUrlParamsValue(DEPARTARRIVEFROM);
@@ -76,7 +76,7 @@ const Container = () => {
                     </div>
                     <div className={styles.ticketArea}>
                         <Suspense fallback={<>Loading</>}>
-                            <Main isLoading={isLoading} error={error}/>
+                            <Main isLoading={isLoading} error={error} currency={curr}/>
                         </Suspense>
                     </div>
                 </div>

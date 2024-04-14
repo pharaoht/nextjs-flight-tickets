@@ -1,5 +1,3 @@
-import { CURRENCY } from "@/constants";
-import useURLParams from "@/hooks/useUrlParams";
 import { formatFlightData, } from "@/util";
 import React, { useState, ReactNode, Suspense,  } from "react";
 
@@ -25,13 +23,9 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
     const [ selectedFlight, setSelectedFlight ] = useState<{}>({});
 
     const [ sideBarChange, setSideBarChange ] = useState(false);
-
-    const { getUrlParamsValue } = useURLParams()
-
-    const currency = ''
-
+    
     const setData = ( flightData: any) => {
-        const formattedData = formatFlightData(flightData, currency || 'USD')
+        const formattedData = formatFlightData(flightData)
         setFlightData(formattedData)
     };
 
