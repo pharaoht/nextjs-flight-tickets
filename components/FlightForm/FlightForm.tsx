@@ -19,9 +19,6 @@ import DestinationButtonGroup from '../DestinationBtn/DestinationBtn';
 import ThemeProvider from '@mui/material/styles/ThemeProvider';
 import { theme } from '@/theme/theme';
 
-
-let init = true;
-
 const FlightForm = () => {
     
     const router = useRouter();
@@ -55,8 +52,14 @@ const FlightForm = () => {
 
     };
 
-    const validateForm = () =>{
+    const validateForm = (): boolean =>{
+        let isValid = true;
+        const pattern = /^[A-Za-z]{3}\s-\s/;
 
+        if(pattern){
+
+        }              
+        return isValid;
     }
 
     const onSubmit = (e: FormEvent<HTMLFormElement>) => {

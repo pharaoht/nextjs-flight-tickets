@@ -83,17 +83,6 @@
     list-style: none;
 } */
 
-.airport_holder {
-    width: 15%;
-    position: absolute;
-    padding: 5px;
-    display: block;
-    bottom: 100%;
-    background: #fff;
-    border-top-left-radius: 5px;
-    border-top-right-radius: 5px;
-}
-
 @keyframes slidefades {
     100% {
         opacity: 1;

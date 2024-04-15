@@ -1,19 +1,19 @@
-import { CURRENCIES, ONEWAY } from '@/constants';
+import { CURRENCIES, DIRECTION, FROMLOCATION, ONEWAY, TOLOCATION } from '@/constants';
 import moment from 'moment';
 
 
 export const formatDateStringStamp = (inputDateString: string) => {
-    if(inputDateString === null) return '';
+    if (inputDateString === null) return '';
 
-    return moment(inputDateString).format('h:mm a');
+    return moment(inputDateString).format('hh:mm a');
 }
 
-export const calculateDays = (departureTime: string, arrivalTime: string ): string => {
+export const calculateDays = (departureTime: string, arrivalTime: string): string => {
 
-    if(departureTime === null || arrivalTime === null) return '';
+    if (departureTime === null || arrivalTime === null) return '';
 
-    const momentDate1 = moment(departureTime, 'YYYY/MM/DD');
-    const momentDate2 = moment(arrivalTime, 'YYYY/MM/DD');
+    const momentDate1 = moment(departureTime, 'YYYY/MM/DD hh:mm');
+    const momentDate2 = moment(arrivalTime, 'YYYY/MM/DD hh:mm');
 
     const differenceDays = momentDate2.diff(momentDate1, 'days');
 
@@ -23,11 +23,11 @@ export const calculateDays = (departureTime: string, arrivalTime: string ): stri
 
 export const secondsToHours = (seconds: number): string => {
 
-    return String(Math.ceil(seconds / 3600)); 
+    return String(Math.ceil(seconds / 3600));
 
 }
 
-export const requestApiObject = ( searchvalue: string ) => {
+export const requestApiObject = (searchvalue: string) => {
 
     const APIKEY = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -41,7 +41,7 @@ export const requestApiObject = ( searchvalue: string ) => {
     }
 }
 
-export const requestFlightsApiObject = ( url: string) => {
+export const requestFlightsApiObject = (url: string) => {
 
     const APIKEY = process.env.NEXT_PUBLIC_API_KEY;
 
@@ -62,7 +62,7 @@ export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal
 
     route.forEach(item => {
 
-        if(item.return === 0) departTotal++;
+        if (item.return === 0) departTotal++;
         else returnTotal++;
 
     })
@@ -72,19 +72,19 @@ export const formatLayovers = (route: any[]): { returnTotal: Number, departTotal
 
 export const getReturnFlightTimes = (route: any[]) => {
 
-    if(route.length === 0) return;
+    if (route.length === 0) return;
 
-    const returnFlights = route.filter(itm => itm.return === 1 && itm );
+    const returnFlights = route.filter(itm => itm.return === 1 && itm);
 
     const lastIndex = returnFlights.length - 1;
 
-    if(returnFlights.length > 1){
+    if (returnFlights.length > 1) {
 
         const departTime = returnFlights[0].local_departure;
 
         const arriveTime = returnFlights[lastIndex].local_arrival;
 
-        return { departTime, arriveTime}
+        return { departTime, arriveTime }
     }
 
     const departTime = returnFlights[0].local_departure;
@@ -103,7 +103,7 @@ export const matchCurrency = (curr: string) => {
     return [sign, name]
 }
 
-export const formatFlightData = ( flightData: any ) => {
+export const formatFlightData = (flightData: any) => {
 
     const data = flightData.data;
 
@@ -111,12 +111,13 @@ export const formatFlightData = ( flightData: any ) => {
 
         const route = itm.route;
 
-        const { returnTotal, departTotal }  = formatLayovers(route);
+        const { returnTotal, departTotal } = formatLayovers(route);
 
         const returnTimes = Number(returnTotal) > 0 ? getReturnFlightTimes(route) : null
 
-        const returnDepartTime = returnTimes ? returnTimes.departTime: null
-        const returnArriveTime = returnTimes ? returnTimes.arriveTime: null
+        const returnDepartTime = returnTimes ? returnTimes.departTime : null
+        const returnArriveTime = returnTimes ? returnTimes.arriveTime : null
+
 
         return {
             cityFromCode: itm.cityFrom,
@@ -138,7 +139,7 @@ export const formatFlightData = ( flightData: any ) => {
             totalDuration: secondsToHours(itm.duration.total),
             flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival),
             flightDaysReturn: calculateDays(returnDepartTime, returnArriveTime),
-            id:`${itm.price}${itm.quality}${itm.utc_arrival}`
+            id: `${itm.price}${itm.quality}${itm.utc_arrival}`
         }
     });
 
@@ -147,16 +148,16 @@ export const formatFlightData = ( flightData: any ) => {
 }
 
 
-export const formLocationData = ( locationData: any) => {
+export const formLocationData = (locationData: any) => {
 
-    const trimInternational = ( airporLocation: string ) => {
-    
+    const trimInternational = (airporLocation: string) => {
+
         return airporLocation.replace(/International/g, 'Int');
     }
-    
+
     const data = locationData.locations;
 
-    const formattedData = data.map((itm:any) => {
+    const formattedData = data.map((itm: any) => {
         const country = itm.city.country.name;
         return {
             id: itm.id,
@@ -168,66 +169,66 @@ export const formLocationData = ( locationData: any) => {
 }
 
 
-export const getFlightParamBuilder = ( params: { key:string, value:string }[] ) => {
+export const getFlightParamBuilder = (params: { key: string, value: string }[]) => {
 
     const queryParams: Record<string, string | string[]> = {
-        fromLocation:'fly_from',
-        toLocation:'fly_to',
-        departure:['dateFrom', 'dateTo'],
+        fromLocation: 'fly_from',
+        toLocation: 'fly_to',
+        departure: ['dateFrom', 'dateTo'],
         return: ['return_to', 'return_from'],
         adults: 'adults',
         children: 'children',
         infants: 'infants',
         cabin: 'selected_cabins',
         currency: 'curr',
-        dObTimeFrom:'dtime_from',
-        dObTimeTo:'dtime_to',
-        dArrTimeFrom:'atime_from',
-        dArrTimeTo:'atime_to',
-        rObTimeFrom:'ret_dtime_from',
-        rObTimeTo:'ret_dtime_to',
-        rArrTimeFrom:'ret_atime_from',
-        rArrTimeTo:'ret_atime_to',
+        dObTimeFrom: 'dtime_from',
+        dObTimeTo: 'dtime_to',
+        dArrTimeFrom: 'atime_from',
+        dArrTimeTo: 'atime_to',
+        rObTimeFrom: 'ret_dtime_from',
+        rObTimeTo: 'ret_dtime_to',
+        rArrTimeFrom: 'ret_atime_from',
+        rArrTimeTo: 'ret_atime_to',
         duration: 'max_fly_duration',
     }
 
     const fixedParams = {
         'vehicle_type': 'aircraft',
-        'locale':'en',
-        'limit':'25'
+        'locale': 'en',
+        'limit': '25'
     }
 
     const queryString = params.map((itm) => {
-        
-        if(queryParams.hasOwnProperty(itm.key)){
+
+        if (queryParams.hasOwnProperty(itm.key)) {
 
             const keyName = itm.key;
             const value = itm.value;
 
-            if(itm.value === '') return;
+            if (itm.value === '') return;
 
-            if(typeof queryParams[keyName] === 'string'){
-                
-                if(keyName === 'fromLocation' || keyName === 'toLocation'){
+            if (typeof queryParams[keyName] === 'string') {
 
-                    return `${queryParams[keyName]}=${value.substring(0,3)}`
+                if (keyName === FROMLOCATION || keyName === TOLOCATION) {
+
+                    return `${queryParams[keyName]}=${value.substring(0, 3)}`
                 }
 
                 return `${queryParams[keyName]}=${value}`
             }
-            else if(typeof queryParams[keyName] === 'object'){
-                
+            else if (typeof queryParams[keyName] === 'object') {
+
                 return `${queryParams[keyName][0]}=${value}&${queryParams[keyName][1]}=${value}`
             }
         }
     })
-    .filter(Boolean)
-    .join('&')
+        .filter(Boolean)
+        .join('&')
 
     //object.entries return object to an mapable array
     const fixedqueryString = Object.entries(fixedParams).map(([key, value]) => {
         return `${key}=${value}`
     }).join('&')
 
-    return [queryString,fixedqueryString].join('&')
+    return [queryString, fixedqueryString].join('&')
 }
