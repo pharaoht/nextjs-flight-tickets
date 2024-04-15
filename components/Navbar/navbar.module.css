@@ -76,7 +76,7 @@
         position: fixed;
         bottom: -100%;
         right: 0;
-        width: 100% !important;
+
         transition: 0.5;
         display: flex;
         justify-content: center;
@@ -90,7 +90,7 @@
     }
 
     .toggle {
-        z-index: 999;
+        z-index: 30;
         margin: 10px;
         position: fixed;
         top: 0;
@@ -115,54 +115,4 @@
         align-items: center;
     }
 
-
-
-/* 
-    .toggle::before {
-        content: "";
-        position: absolute;
-        width: 28px;
-        height: 2px;
-        background-color: #fff;
-        transform: translateY(-5px);
-        transition: 0.2s;
-    }
-
-    .toggle::after {
-        content: "";
-        position: absolute;
-        width: 28px;
-        height: 2px;
-        background-color: #fff;
-        transform: translateY(5px);
-        transition: 0.2s;
-    } */
-
-    .toggle.activate::before {
-        transform: translateY(0px) rotate(45deg);
-    }
-
-    .toggle.activate::after {
-        transform: translateY(0px) rotate(-45deg);
-    }
-
-    .toggle.activate {
-        background: #ff5a26;;
-    }
 }
-
-/* @media (max-width: 767px) {
-    #navbar {
-        display: none;
-    }
-
-    .container {
-        padding: 30px 0px;
-        justify-content: center;
-    }
-
-    .banner {
-        height: 100vh;
-    }
-
-} */

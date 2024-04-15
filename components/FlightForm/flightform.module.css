@@ -17,6 +17,7 @@
 .whiteBackGround {
     background-color: #fff;
     width: 175px;
+    border: 1px solid grey;
 }
 
 .inputContainer {
@@ -28,19 +29,29 @@
 .destinationBtn{
     display: flex;
     flex-direction: column;
-    
+    border-radius: 0%;
 }
+
+.findBtn{
+    border-radius: 0%;
+}
+
 
 @media (max-width: 991px) {
     .searchBox {
         flex-direction: column;
-        width: 100%;
+        width: 50%;
+        padding: 20px 50px;
     }
 
     .destinationBtn{
         display: flex;
         flex-direction: row;
         
+    }
+
+    .findBtn{
+        width: 175px;
     }
 }
 

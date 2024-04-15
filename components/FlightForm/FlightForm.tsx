@@ -174,7 +174,7 @@ const FlightForm = () => {
                         onChange={(newValue) => handleOnChange(RETURN, String(moment(newValue).format('YYYY-MM-DD')), '')}
                     />
                 </LocalizationProvider>
-                <Button type='submit' id='btn-find-Home' variant="contained" endIcon={<SearchIcon />} onClick={()=>{}}>
+                <Button className={styles.findBtn} type='submit' id='btn-find-Home' variant="contained" endIcon={<SearchIcon />} onClick={()=>{}}>
                     Find
                 </Button>
             </form>

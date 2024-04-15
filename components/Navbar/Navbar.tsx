@@ -79,7 +79,7 @@ const Navbar = () => {
                     </Button>
                 }
             </div>
-            <div className={`${styles.group} `} id='navbar'>
+            <div className={`${styles.group}`} id='navbar'>
                 <ul className={styles.navigation}>
                     { renderLinks() }
                 </ul>
