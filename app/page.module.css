@@ -104,7 +104,8 @@
 @media (max-width: 767px) {
     .banner {
         padding: 0px;
-        z-index: -1
+        z-index: -1;
+        position:absolute;
     }
 
     .searchBox {
