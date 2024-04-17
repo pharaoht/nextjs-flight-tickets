@@ -135,7 +135,6 @@ export const formatFlightData = (flightData: any) => {
 
         const returnDepartTime = returnTimes ? returnTimes.departTime : null
         const returnArriveTime = returnTimes ? returnTimes.arriveTime : null
-        console.log(route)
 
         return {
             cityFromCode: itm.cityFrom,

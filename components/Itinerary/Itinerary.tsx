@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import styles from './infoFlight.module.css';
 import { modalDataSourceProps } from '@/types';
+import { Button } from '@mui/material';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
+import { PRIMARY } from '@/theme/theme';
 
 interface ItineraryProps {
     flightData: any;
@@ -51,8 +54,12 @@ const Itinerary = ({ flightData }: ItineraryProps) => {
     <>
         <h2>Journey Preview</h2>
         <div className={styles.headerContainer}>
-            <h3>{flightData.cityFrom} - {flightData.countryFrom}</h3>
-            <h3>{flightData.cityTo} - {flightData.countryTo}</h3>
+            <h3>{flightData.cityFrom}, {flightData.countryFrom}</h3>
+            <h3><ArrowForwardIcon /></h3>
+            <h3>{flightData.cityTo}, {flightData.countryTo}</h3>
+        </div>
+        <div className={styles.infoContainer}>
+          <h4>Price: ${flightData.price}</h4>
         </div>
         <div>
           {
@@ -64,6 +71,18 @@ const Itinerary = ({ flightData }: ItineraryProps) => {
             renderFlightData(flightData.modalRouteDataSource[activeTab])
           }
         </div>
+        <div>
+          <a href={flightData.link} target="_blank" rel="noopener noreferrer">
+            <Button
+              color={PRIMARY}
+              variant="contained"
+              sx={{'height':'3vh'}}
+            >
+              Book
+            </Button>
+          </a>
+        </div>
+        
     </>
   )
 }

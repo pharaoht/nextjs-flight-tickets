@@ -27,3 +27,11 @@
 .singleSpan{
     margin-right: 10px;
 }
+
+@media (max-width: 600px){
+
+    .headerContainer{
+        justify-content: center;
+        text-align: center;
+    }
+}

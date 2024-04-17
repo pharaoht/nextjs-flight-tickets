@@ -19,6 +19,15 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+'@media (max-width: 600px)': { 
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent:'center',
+    textAlign:'center',
+    fontSize:'14px'
+
+  },
+
 };
 
 
@@ -30,6 +39,7 @@ const Dialog = ({ isOpen, handleToggle, children }: DialogProps) => {
             onClose={handleToggle}
             aria-labelledby="modal-modal-title"
             aria-describedby="modal-modal-description"
+
         >
             <Box sx={style}>
                 {children}
