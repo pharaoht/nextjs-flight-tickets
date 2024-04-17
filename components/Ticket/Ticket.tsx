@@ -28,13 +28,14 @@ interface ticketProps {
     toggleDialog: () => void;
     setSelectedFlights: (...args: any) => void;
     currency:string;
+    modalRouteDataSource:any[];
 }
 
 const Ticket = (
     { 
         cityFrom, cityTo, price, arriveDate, totalDuration, departDate, departureFlights, returnFlights, departFlightDays, 
         returnFlightDays, returnDepartDate, returnArriveDate, link, stops, type, airlines, countryFrom, countryTo, durationDepart, durationReturn,
-        toggleDialog, setSelectedFlights, currency
+        toggleDialog, setSelectedFlights, currency, modalRouteDataSource
     
     }: ticketProps ) => {
 
@@ -74,6 +75,7 @@ const Ticket = (
             returnFlights,
             departFlightDays,
             returnFlightDays,
+            modalRouteDataSource
         }
     
         setSelectedFlights(itemData);

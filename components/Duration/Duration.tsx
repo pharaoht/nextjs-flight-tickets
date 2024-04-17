@@ -7,18 +7,26 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import FlightContext from '@/context/flightState';
 
+
+interface DurationProps {
+    departDate:string;
+    returnDate?:string;
+    setDuration: React.Dispatch<React.SetStateAction<string>>;
+}
+
 const MINDISTANCE = 1;
 
-const Duration = () => {
+const Duration = ({ departDate, returnDate, setDuration }: DurationProps ) => {
 
     const flightContext = useContext(FlightContext);
 
     const flightData = flightContext?.flightData || [];
 
-    const [ isHidden, setIsHidden ] = useState(true);
+    const [ isHidden, setIsHidden ] = useState<boolean>(true);
 
-    const [ min, setMin ] = useState(0);
-    const [ max, setMax ] = useState(0);
+    const [ min, setMin ] = useState<number>(0);
+    const [ max, setMax ] = useState<number>(0);
+
 
     const [ durationSlider, setDurationSlider ] = useState<number[]>([0,0]);
 
@@ -55,8 +63,11 @@ const Duration = () => {
     }
 
     useEffect(() => {
-        getDurations()
-    }, [flightData])
+
+        getDurations();
+
+    }, [ flightData ])
+
 
     return (
         <div className={styles.parent}>

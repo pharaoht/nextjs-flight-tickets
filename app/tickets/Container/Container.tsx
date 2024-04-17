@@ -9,7 +9,7 @@ import FlightContext from '@/context/flightState';
 import Sidebar from '@/components/Sidebar/Sidebar';
 import Searchbar from '@/components/Searchbar/Searchbar';
 import React, { useEffect, useContext, Suspense } from 'react';
-import { CURRENCY, DEPARTARRIVEFROM, DEPARTARRIVETO, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DEPARTURE, RETURN } from '@/constants';
+import { CURRENCY, DEPARTARRIVEFROM, DEPARTARRIVETO, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DEPARTURE, RETURN, TOTALDURATION } from '@/constants';
 import { getFlightParamBuilder, requestFlightsApiObject, } from '@/util/index';
 import CircularProgress from '@mui/material/CircularProgress/CircularProgress';
 
@@ -19,7 +19,7 @@ const Container = () => {
 
     const { isLoading, sendRequest, error } = useHttp();
 
-    const { getAllUrlParams, getUrlParamsValue } = useURLParams();
+    const { getAllUrlParams, getUrlParamsValue, setUrlParams } = useURLParams();
 
     const flightContext = useContext(FlightContext);
     const curr = getUrlParamsValue(CURRENCY) || 'USD';
@@ -29,7 +29,8 @@ const Container = () => {
     const arrTimeTo = getUrlParamsValue(DEPARTARRIVETO);
     const departureDate = getUrlParamsValue(DEPARTURE);
     const returnDate = getUrlParamsValue(RETURN);
-    const dependencies = [ dObTimeFrom, dObTimeTo, returnDate, departureDate, arrTimeFrom, arrTimeTo]
+    const duration = getUrlParamsValue(TOTALDURATION);
+    const dependencies = [ dObTimeFrom, dObTimeTo, returnDate, departureDate, arrTimeFrom, arrTimeTo, duration]
 
     const contextFlightsLength = flightContext?.flightData || [];
 

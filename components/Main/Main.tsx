@@ -74,6 +74,7 @@ const Main = ({ isLoading, error, currency }: PropsForMain) => {
                 toggleDialog={toggleIsOpen}
                 setSelectedFlights={handleSelectFlight}
                 currency={currency}
+                modalRouteDataSource={itm.modalRouteDataSource}
            />
         ))
     );

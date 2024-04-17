@@ -1,6 +1,6 @@
 import useURLParams from '@/hooks/useUrlParams';
 import styles from './searchAdvance.module.css';
-import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION } from '@/constants';
+import { DEPARTURE, FROMLOCATION, RETURN, TOLOCATION, TOTALDURATION } from '@/constants';
 import useDate from '@/hooks/useDate';
 import { Suspense, useEffect, useState } from 'react';
 import SearchForm from '../SearchbarForm/SearchbarForm';

@@ -5,20 +5,36 @@ import moment from 'moment';
 export const formatDateStringStamp = (inputDateString: string) => {
     if (inputDateString === null) return '';
 
-    return moment(inputDateString).format('hh:mm a');
+    return moment(inputDateString).format('h:mm a');
 }
 
 export const calculateDays = (departureTime: string, arrivalTime: string): string => {
 
     if (departureTime === null || arrivalTime === null) return '';
 
-    const momentDate1 = moment(departureTime, 'YYYY/MM/DD hh:mm');
-    const momentDate2 = moment(arrivalTime, 'YYYY/MM/DD hh:mm');
+    const momentDate1 = moment(departureTime).format('YYYY-MM-DD');
+    const momentDate2 = moment(arrivalTime).format('YYYY-MM-DD');
 
-    const differenceDays = momentDate2.diff(momentDate1, 'days');
+    //calculate days difference
+    const differenceDays = moment(momentDate2).diff(moment(momentDate1), 'days');
 
     return String(differenceDays)
 
+}
+
+export const calculateTime = (departTime: string, arrivalTime: string): string => {
+
+    const departure = moment(departTime);
+    const arrive = moment(arrivalTime);
+
+    const durationInMilliSeconds = arrive.diff(departure);
+
+    const duration = moment.duration(durationInMilliSeconds);
+
+    const hours = Math.floor(duration.asHours());
+    const minutes = duration.minutes();
+
+    return `${hours} h ${minutes} m `;
 }
 
 export const secondsToHours = (seconds: number): string => {
@@ -113,11 +129,13 @@ export const formatFlightData = (flightData: any) => {
 
         const { returnTotal, departTotal } = formatLayovers(route);
 
+        const modalRouteDataSource = modalFlightData(route);
+
         const returnTimes = Number(returnTotal) > 0 ? getReturnFlightTimes(route) : null
 
         const returnDepartTime = returnTimes ? returnTimes.departTime : null
         const returnArriveTime = returnTimes ? returnTimes.arriveTime : null
-
+        console.log(route)
 
         return {
             cityFromCode: itm.cityFrom,
@@ -139,6 +157,7 @@ export const formatFlightData = (flightData: any) => {
             totalDuration: secondsToHours(itm.duration.total),
             flightDaysDepart: calculateDays(itm.local_departure, itm.local_arrival),
             flightDaysReturn: calculateDays(returnDepartTime, returnArriveTime),
+            modalRouteDataSource: modalRouteDataSource,
             id: `${itm.price}${itm.quality}${itm.utc_arrival}`
         }
     });
@@ -232,3 +251,24 @@ export const getFlightParamBuilder = (params: { key: string, value: string }[]) 
 
     return [queryString, fixedqueryString].join('&')
 }
+
+export const modalFlightData = ( route: any[] ) => {
+
+    const modalRouteDataSource = route.map((itm, idx) => {
+        return {
+            airline:itm.airline,
+            airportCodeFrom: itm.flyFrom,
+            airportCodeTo: itm.flyTo,
+            cityFrom: itm.cityFrom,
+            cityTo: itm.cityTo,
+            fareCategory: itm.fare_category,
+            flightNum: itm.flight_no,
+            return: itm.return,
+            arriveTime: formatDateStringStamp(itm.local_arrival),
+            departTime: formatDateStringStamp(itm.local_departure),
+            duration: calculateTime(itm.local_departure, itm.local_arrival),
+        }
+    });
+
+    return modalRouteDataSource;
+};

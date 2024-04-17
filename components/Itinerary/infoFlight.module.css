@@ -1,5 +1,6 @@
 .headerContainer{
     display: flex;
+    gap: 10px;
 }
 
 .listContainer{
@@ -20,4 +21,9 @@
 
 .listItem{
     padding: 5px;
+    cursor: pointer;
+}
+
+.singleSpan{
+    margin-right: 10px;
 }

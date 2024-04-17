@@ -1,14 +1,16 @@
 import React, { useEffect, useState, useRef } from 'react'
 import TimeSlider from '../TimeSlider/TimeSlider';
 import useURLParams from '@/hooks/useUrlParams';
-import { ONEWAY, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DIRECTION, DEPARTARRIVEFROM, DEPARTARRIVETO, RETURNARRIVEFROM, RETURNOUTBOUNDTIMEFROM, RETURNOUTBOUNDTIMETO, RETURNARRIVETO } from '@/constants';
+import { ONEWAY, DEPARTOUTBOUNDTIMEFROM, DEPARTOUTBOUNDTIMETO, DIRECTION, DEPARTARRIVEFROM, DEPARTARRIVETO, RETURNARRIVEFROM, RETURNOUTBOUNDTIMEFROM, RETURNOUTBOUNDTIMETO, RETURNARRIVETO, TOTALDURATION, DEPARTURE, RETURN } from '@/constants';
 import Duration from '../Duration/Duration';
 
 const Sidebar = () => {
 
-  const { setMultipleUrlParams, getUrlParamsValue } = useURLParams();
+  const { setMultipleUrlParams, getUrlParamsValue, setUrlParams } = useURLParams();
 
   const isReturn = getUrlParamsValue(DIRECTION);
+  const departureParam = getUrlParamsValue(DEPARTURE);
+  const returnParam = getUrlParamsValue(RETURN);
   
   const [ flightTimes, setFlightTimes ] = useState({
     [DEPARTOUTBOUNDTIMEFROM]: '',
@@ -21,13 +23,20 @@ const Sidebar = () => {
     [RETURNARRIVETO]:'',
   });
 
+  const [ duration, setDuration ] = useState<string>('');
+
   useEffect(() => {
       setMultipleUrlParams(flightTimes);
   }, [flightTimes])
 
+
   return (
     <div>
-        <Duration />
+        <Duration 
+          setDuration={setDuration}
+          departDate={departureParam}
+          returnDate={returnParam}
+        />
         <TimeSlider 
           title='Depart Flight' 
           setParamFuncOb={setFlightTimes} 
