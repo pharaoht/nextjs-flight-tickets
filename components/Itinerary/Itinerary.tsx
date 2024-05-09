@@ -71,7 +71,7 @@ const Itinerary = ({ flightData }: ItineraryProps) => {
             renderFlightData(flightData.modalRouteDataSource[activeTab])
           }
         </div>
-        <div>
+        <div className={styles.flightContainer}>
           <a href={flightData.link} target="_blank" rel="noopener noreferrer">
             <Button
               color={PRIMARY}

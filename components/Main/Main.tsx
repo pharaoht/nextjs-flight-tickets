@@ -20,6 +20,10 @@ const Main = ({ isLoading, error, currency }: PropsForMain) => {
 
     const flightData = flightContext?.flightData || [];
 
+    const filterData = flightContext?.filteredData || [];
+
+    const dataSource = filterData.length > 0 ? filterData : flightData;
+
     const selectedFlight = flightContext?.selectedFlight || {};
 
     const setSelectedFlight = flightContext?.handleSelectFlights;
@@ -48,7 +52,7 @@ const Main = ({ isLoading, error, currency }: PropsForMain) => {
 
     const renderFlights = () => (
         
-        flightData.map((itm,idx) => (
+        dataSource.map((itm,idx) => (
             
            <Ticket key={idx} 
                 cityFrom={itm.airportFromCode}
@@ -84,6 +88,7 @@ const Main = ({ isLoading, error, currency }: PropsForMain) => {
             <div className={styles.container}>
                 { isLoading && !error && loadingPrompt() }
                 { !isLoading && flightData.length === 0 && noFlightsPrompt() }
+
                 { !isLoading && flightData.length > 0 && renderFlights() }
                 { error && errorPrompt() }
                 <Dialog isOpen={isDialogOpen} handleToggle={toggleIsOpen}>

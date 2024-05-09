@@ -23,14 +23,10 @@ const Container = () => {
 
     const flightContext = useContext(FlightContext);
     const curr = getUrlParamsValue(CURRENCY) || 'USD';
-    const dObTimeFrom = getUrlParamsValue(DEPARTOUTBOUNDTIMEFROM);
-    const dObTimeTo = getUrlParamsValue(DEPARTOUTBOUNDTIMETO);
-    const arrTimeFrom = getUrlParamsValue(DEPARTARRIVEFROM);
-    const arrTimeTo = getUrlParamsValue(DEPARTARRIVETO);
     const departureDate = getUrlParamsValue(DEPARTURE);
     const returnDate = getUrlParamsValue(RETURN);
-    const duration = getUrlParamsValue(TOTALDURATION);
-    const dependencies = [ dObTimeFrom, dObTimeTo, returnDate, departureDate, arrTimeFrom, arrTimeTo, duration]
+
+    const dependencies = [ returnDate, departureDate ]
 
     const contextFlightsLength = flightContext?.flightData || [];
 
@@ -42,7 +38,7 @@ const Container = () => {
 
         const requconFig = requestFlightsApiObject(paramEndpoint);
     
-        await sendRequest({requestConfig: requconFig, callback: flightContext?.setData || (()=>{})})
+        await sendRequest({ requestConfig: requconFig, callback: flightContext?.setData || (()=>{})})
     };
 
     const renderFlightsAvailable = () => (
@@ -58,6 +54,7 @@ const Container = () => {
     );
 
     useEffect(()=>{ getFlights() }, dependencies );
+
 
     return (
         <ThemeProvider theme={theme}>

@@ -9,20 +9,20 @@ import FlightContext from '@/context/flightState';
 
 
 interface DurationProps {
-    departDate:string;
-    returnDate?:string;
+    setUserInput: React.Dispatch<React.SetStateAction<boolean>>;
     setDuration: React.Dispatch<React.SetStateAction<string>>;
 }
 
 const MINDISTANCE = 1;
 
-const Duration = ({ departDate, returnDate, setDuration }: DurationProps ) => {
+const Duration = ({ setDuration, setUserInput }: DurationProps ) => {
 
     const flightContext = useContext(FlightContext);
 
     const flightData = flightContext?.flightData || [];
 
     const [ isHidden, setIsHidden ] = useState<boolean>(true);
+
 
     const [ min, setMin ] = useState<number>(0);
     const [ max, setMax ] = useState<number>(0);
@@ -33,6 +33,7 @@ const Duration = ({ departDate, returnDate, setDuration }: DurationProps ) => {
     const toggleHandler = () => setIsHidden( prevState => !prevState);
 
     const handleSliderChange = (event: Event, newValue: number | number[], activeThumb: number) => {
+  
         if (!Array.isArray(newValue)) return;
         
         if (activeThumb === 0) {
@@ -41,6 +42,9 @@ const Duration = ({ departDate, returnDate, setDuration }: DurationProps ) => {
         else {
             setDurationSlider([durationSlider[0], Math.max(newValue[1], durationSlider[0] + MINDISTANCE)]);
         }
+
+        setUserInput(true);
+
     };
 
     const getDurations = ( ) => {
@@ -66,7 +70,12 @@ const Duration = ({ departDate, returnDate, setDuration }: DurationProps ) => {
 
         getDurations();
 
-    }, [ flightData ])
+    }, [ flightData ]);
+
+    useEffect(() => {
+
+        setDuration(`${durationSlider[0]} - ${durationSlider[1]}`)
+    }, [ durationSlider ]);
 
 
     return (

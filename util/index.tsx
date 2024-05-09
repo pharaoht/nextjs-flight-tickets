@@ -207,13 +207,12 @@ export const getFlightParamBuilder = (params: { key: string, value: string }[]) 
         rObTimeTo: 'ret_dtime_to',
         rArrTimeFrom: 'ret_atime_from',
         rArrTimeTo: 'ret_atime_to',
-        duration: 'max_fly_duration',
     }
 
     const fixedParams = {
         'vehicle_type': 'aircraft',
         'locale': 'en',
-        'limit': '25'
+        'limit': '50'
     }
 
     const queryString = params.map((itm) => {

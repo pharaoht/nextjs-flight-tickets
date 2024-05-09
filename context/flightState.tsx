@@ -6,8 +6,8 @@ interface FlightConextType {
     setData?: (...args: any) => void;
     selectedFlight: {};
     handleSelectFlights?: (...args: any) => void;
-    setSideBarChange?: (...args: any) => void;
-    sideBarChange?: boolean;
+    filterDuration?: (...args: any) => void;
+    filteredData?: any[];
 }
 
 const FlightContext = React.createContext<FlightConextType | null>(null);
@@ -20,9 +20,9 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
 
     const [ flightData, setFlightData ] = useState<any[]>([]);
 
-    const [ selectedFlight, setSelectedFlight ] = useState<{}>({});
+    const [ filteredData, setFilteredData ] = useState<any[]>([]);
 
-    const [ sideBarChange, setSideBarChange ] = useState(false);
+    const [ selectedFlight, setSelectedFlight ] = useState<{}>({});
     
     const setData = ( flightData: any) => {
         const formattedData = formatFlightData(flightData)
@@ -33,6 +33,23 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
         setSelectedFlight(data);
     }
 
+    const filterDuration = (hours: string) => {
+
+        const hourArr = hours.split('-');
+
+        const results = flightData.filter((itm, idx) => {
+            if(Number(itm.totalDuration) > Number(hourArr[0]) 
+                && Number(itm.totalDuration) < Number(hourArr[1])){
+               return itm
+            }
+
+        });
+
+
+        setFilteredData(results);
+
+    }
+
     return (
         <Suspense fallback={<>loading</>}>
             <FlightContext.Provider 
@@ -41,8 +58,8 @@ export const FlightContextProvider: React.FC<FlightContextProviderProps> = ({ ch
                     setData,
                     selectedFlight,
                     handleSelectFlights,
-                    sideBarChange, 
-                    setSideBarChange 
+                    filteredData, 
+                    filterDuration,
                 }}
             >
                 { children}

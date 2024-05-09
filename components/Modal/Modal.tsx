@@ -24,7 +24,7 @@ const style = {
     flexDirection: 'column',
     justifyContent:'center',
     textAlign:'center',
-    fontSize:'14px'
+    fontSize:'13px'
 
   },
 

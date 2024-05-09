@@ -7,6 +7,10 @@
     display: flex;
     list-style: none;
     padding: 0;
+    overflow-x: auto;
+    margin: 0;
+    /* Allow horizontal scrolling if needed */
+
 }
 
 .defaultListItem{
@@ -17,6 +21,10 @@
     border-top: 2px solid #00a698;
     border-left: 2px solid #00a698;
     border-right: 2px solid #00a698;
+}
+
+.flightContainer{
+    padding: 10px;
 }
 
 .listItem{
